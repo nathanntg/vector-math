@@ -11,18 +11,18 @@ import Accelerate
 
 public struct VectorFloat: Vector
 {
-    public typealias IndexType = Int
-    public typealias ElementType = Float
+    public typealias Index = Int
+    public typealias Element = Float
     
-    private var memory: ManagedMemory<ElementType>
+    private var memory: ManagedMemory<Element>
     
     // TODO: INVESTIGATE if there is a performance penalty for this, or if it just gets inlined
-    public var count: Int {
+    public var count: Index {
         get {
             return memory.length
         }
     }
-    public var length: Int {
+    public var length: Index {
         get {
             return memory.length
         }
@@ -30,8 +30,8 @@ public struct VectorFloat: Vector
     
     // INITIALIZATION
     
-    public init(zerosOfLength length: IndexType) {
-        memory = ManagedMemory<Float>(unfilledOfLength: length)
+    public init(zerosOfLength length: Index) {
+        memory = ManagedMemory<Element>(unfilledOfLength: length)
         vDSP_vclr(memory[0], 1, vDSP_Length(length))
     }
     
@@ -40,6 +40,16 @@ public struct VectorFloat: Vector
         memory = vector.memory
     }
     
+    public init(fromArray elements: [Element]) {
+        // initialize memory
+        memory = ManagedMemory<Element>(unfilledOfLength: elements.count)
+        
+        // copy elements
+        var elements = elements
+        withUnsafePointer(&elements[0]) {
+            memcpy(memory[0], $0, sizeof(Element) * elements.count)
+        }
+    }
     
     // PRIVATE
     
@@ -51,18 +61,22 @@ public struct VectorFloat: Vector
     
     // ACCESS
     
-    public subscript(index: IndexType) -> ElementType {
+    public subscript(index: Index) -> Element {
         get {
             return memory[index]
         }
         set {
+            // copy before write
+            ensureUnique()
+            
+            // assign
             memory[index] = newValue
         }
     }
     
     // OPERATORS
     
-    mutating public func inPlaceAddScalar(_ scalar: ElementType) {
+    mutating public func inPlaceAddScalar(_ scalar: Element) {
         // copy before write
         ensureUnique()
         

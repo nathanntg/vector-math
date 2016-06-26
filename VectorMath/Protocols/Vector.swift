@@ -8,27 +8,67 @@
 
 import Foundation
 
-public protocol Vector
+public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomDebugStringConvertible
 {
-    associatedtype IndexType
-    associatedtype ElementType
+    associatedtype Index
+    associatedtype Element
     
-    var count: Int { get }
-    var length: Int { get }
+    var count: Index { get }
+    var length: Index { get }
     
     // INITIALIZERS
-    init(zerosOfLength length: IndexType)
+    init(zerosOfLength length: Index)
     init(copyOf vector: Self)
+    init(fromArray array: [Element])
+    init(arrayLiteral elements: Element...)
     
     // ACCESS
-    subscript(index: IndexType) -> ElementType { get set }
+    subscript(index: Index) -> Element { get set }
     
     // IN-PLACE OPERATORS
-    mutating func inPlaceAddScalar(_ scalar: ElementType)
+    mutating func inPlaceAddScalar(_ scalar: Element)
     mutating func inPlaceAddVector(_ vector: Self)
 }
 
-public func +=<T: Vector, U where T.ElementType == U>(lhs: inout T, rhs: U) {
+extension Vector where Index: Integer {
+    public var startIndex: Index {
+        return 0
+    }
+    
+    public var endIndex: Index {
+        return count
+    }
+    
+    public func index(before i: Index) -> Index {
+        return i - 1
+    }
+    
+    public func index(after i: Index) -> Index {
+        return i + 1
+    }
+}
+
+extension Vector {
+    public init(arrayLiteral elements: Element...) {
+        self.init(fromArray: elements)
+    }
+}
+
+extension Vector where Element: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        let strings = map {
+            return "\($0)"
+        }
+        
+        let string = strings.joined(separator: ", ")
+        
+        return "[\(string)]"
+    }
+}
+
+// TODO: implement equatable
+
+public func +=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
     lhs.inPlaceAddScalar(rhs)
 }
 

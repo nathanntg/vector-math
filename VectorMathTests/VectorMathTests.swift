@@ -21,6 +21,40 @@ class VectorMathTests: XCTestCase {
         super.tearDown()
     }
     
+    func testFromArray() {
+        var arr = Array<Float>()
+        arr += (0..<10).map(Float.init)
+        
+        let vector = VectorFloat(fromArray: arr)
+        XCTAssertEqual(vector.count, arr.count)
+        for (i, j) in vector.enumerated() {
+            XCTAssertEqual(Float(i), j)
+        }
+        
+        let vector2: VectorFloat = [2.0, 3.0, 5.0, 7.0, 11.0, 13.0]
+        XCTAssertEqual(vector2.count, 6)
+        XCTAssertEqual(vector2[4], 11.0)
+    }
+    
+    func testCollection() {
+        var vector = VectorFloat(zerosOfLength: 10)
+        
+        // asign incremental
+        for i in 0..<10 {
+            vector[i] = Float(i)
+        }
+        
+        // test assignment and iteration over collection
+        for (i, j) in vector.enumerated() {
+            XCTAssertEqual(Float(i), j)
+        }
+        
+        vector += 5.0
+        for (i, j) in vector.enumerated() {
+            XCTAssertEqual(Float(i) + 5.0, j)
+        }
+    }
+    
     func testAddition() {
         // properly allocated
         var vector = VectorFloat(zerosOfLength: 10)
