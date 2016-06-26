@@ -26,8 +26,20 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     subscript(index: Index) -> Element { get set }
     
     // IN-PLACE OPERATORS
+    
     mutating func inPlaceAddScalar(_ scalar: Element)
     mutating func inPlaceAddVector(_ vector: Self)
+    
+    mutating func inPlaceSubtractScalar(_ scalar: Element)
+    mutating func inPlaceSubtractVector(_ vector: Self)
+    
+    // OPERATORS
+    
+    func addScalar(_ scalar: Element) -> Self
+    func addVector(_ vector: Self) -> Self
+    
+    func subtractScalar(_ scalar: Element) -> Self
+    func subtractVector(_ vector: Self) -> Self
 }
 
 extension Vector where Index: Integer {
@@ -66,6 +78,32 @@ extension Vector where Element: CustomDebugStringConvertible {
     }
 }
 
+extension Vector {
+    public func addScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceAddScalar(scalar)
+        return ret
+    }
+    
+    public func addVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceAddVector(vector)
+        return ret
+    }
+    
+    public func subtractScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceSubtractScalar(scalar)
+        return ret
+    }
+    
+    public func subtractVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceSubtractVector(vector)
+        return ret
+    }
+}
+
 // TODO: implement equatable
 
 public func +=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
@@ -74,4 +112,35 @@ public func +=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
 
 public func +=<T: Vector>(lhs: inout T, rhs: T) {
     lhs.inPlaceAddVector(rhs)
+}
+
+public func -=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
+    lhs.inPlaceSubtractScalar(rhs)
+}
+
+public func -=<T: Vector>(lhs: inout T, rhs: T) {
+    lhs.inPlaceSubtractVector(rhs)
+}
+
+public func +<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
+    return lhs.addScalar(rhs)
+}
+
+public func +<T: Vector, U where T.Element == U>(lhs: U, rhs: T) -> T {
+    return rhs.addScalar(lhs)
+}
+
+public func +<T: Vector>(lhs: T, rhs: T) -> T {
+    return lhs.addVector(rhs)
+}
+
+public func -<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
+    return lhs.subtractScalar(rhs)
+}
+
+// TODO: add scalar - vector option
+
+public func -<T: Vector>(lhs: T, rhs: T) -> T {
+    return lhs.subtractVector(rhs)
+    
 }

@@ -21,6 +21,15 @@ class VectorMathTests: XCTestCase {
         super.tearDown()
     }
     
+    func testCreation() {
+        // properly allocated
+        var vector = VectorFloat(zerosOfLength: 10)
+        XCTAssertEqual(vector.count, 10)
+        for i in 0..<10 {
+            XCTAssertEqual(vector[i], 0.0)
+        }
+    }
+    
     func testFromArray() {
         var arr = Array<Float>()
         arr += (0..<10).map(Float.init)
@@ -58,9 +67,6 @@ class VectorMathTests: XCTestCase {
     func testAddition() {
         // properly allocated
         var vector = VectorFloat(zerosOfLength: 10)
-        for i in 0..<10 {
-            XCTAssertEqual(vector[i], 0.0)
-        }
         
         // scalar addition
         vector += 1.0
@@ -89,12 +95,65 @@ class VectorMathTests: XCTestCase {
         for i in 0..<10 {
             XCTAssertEqual(vector3[i], 0.0)
         }
+        
+        // non-inplace operators
+        let vector4 = vector3 + 25.0
+        let vector5 = 25.0 + vector3
+        let vector6 = vector4 + vector5
+        for i in 0..<10 {
+            XCTAssertEqual(vector3[i], 0.0)
+            XCTAssertEqual(vector4[i], 25.0)
+            XCTAssertEqual(vector5[i], 25.0)
+            XCTAssertEqual(vector6[i], 50.0)
+        }
     }
     
-    func testPerformanceExample() {
+    func testSubtraction() {
+        var vector = VectorFloat(zerosOfLength: 10)
+        
+        // scalar subtraction
+        vector -= 5.0
+        for n in vector {
+            XCTAssertEqual(n, -5.0)
+        }
+        
+        // vector subtraction
+        vector -= vector
+        for n in vector {
+            XCTAssertEqual(n, 0.0)
+        }
+        
+        // non-inplace scalar subtraction
+        let vector2 = vector - 3.0
+        XCTAssertEqual(vector2.length, vector.length)
+        for (i, n) in vector2.enumerated() {
+            XCTAssertEqual(vector[i], 0.0)
+            XCTAssertEqual(n, -3.0)
+        }
+        
+        // non-inplace vector subtraction
+        let vector3 = vector2 - (vector + 7.0)
+        XCTAssertEqual(vector3.length, vector.length)
+        for (i, n) in vector3.enumerated() {
+            XCTAssertEqual(vector[i], 0.0)
+            XCTAssertEqual(vector2[i], -3.0)
+            XCTAssertEqual(n, -10.0)
+        }
+    }
+    
+    func testPerformanceInPlace() {
         // This is an example of a performance test case.
+        var vector = VectorFloat(zerosOfLength: 1000)
         self.measure {
-            // Put the code you want to measure the time of here.
+            vector += 1.0
+        }
+    }
+    
+    func testPerformanceAllocate() {
+        var vector = VectorFloat(zerosOfLength: 1000)
+        self.measure {
+            let vector2 = vector + 1.0
+            vector = vector2 - 1.0
         }
     }
 }

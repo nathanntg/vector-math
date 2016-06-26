@@ -59,6 +59,11 @@ public struct VectorFloat: Vector
         }
     }
     
+    private func ensureSameLength(_ vector: VectorFloat) {
+        // must have matching lengths
+        precondition(memory.length == vector.memory.length, "Vector lengths do not match (\(memory.length) and \(vector.memory.length))")
+    }
+    
     // ACCESS
     
     public subscript(index: Index) -> Element {
@@ -74,7 +79,7 @@ public struct VectorFloat: Vector
         }
     }
     
-    // OPERATORS
+    // IN-PLACE OPERATORS
     
     mutating public func inPlaceAddScalar(_ scalar: Element) {
         // copy before write
@@ -87,13 +92,29 @@ public struct VectorFloat: Vector
     
     mutating public func inPlaceAddVector(_ vector: VectorFloat) {
         // must have matching lengths
-        precondition(memory.length == vector.memory.length, "Vector lengths do not match (\(memory.length) and \(vector.memory.length))")
+        ensureSameLength(vector)
         
         // copy before write
         ensureUnique()
         
         // perform addition
         vDSP_vadd(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
+    mutating public func inPlaceSubtractScalar(_ scalar: Element) {
+        // no vDSP subtraction
+        inPlaceAddScalar(0 - scalar)
+    }
+    
+    mutating public func inPlaceSubtractVector(_ vector: VectorFloat) {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // copy before write
+        ensureUnique()
+        
+        // perform addition
+        vDSP_vsub(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
 }
 
