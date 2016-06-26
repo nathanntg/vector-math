@@ -115,6 +115,9 @@ public struct VectorDouble: Vector
     }
     
     // IN-PLACE OPERATORS
+    // optimization: rather than ensuringUniqueness, offer two code paths depending on whether
+    // the memory is uniquely referenced or not
+
     
     mutating public func inPlaceNegate() {
         // copy before write
