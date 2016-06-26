@@ -1,18 +1,18 @@
 //
-//  VectorFloat.swift
+//  VectorDouble.swift
 //  VectorMath
 //
-//  Created by Nathan Perkins on 6/24/16.
+//  Created by Nathan Perkins on 6/26/16.
 //  Copyright © 2016 MaxMo Technologies LLC. All rights reserved.
 //
 
 import Foundation
 import Accelerate
 
-public struct VectorFloat: Vector
+public struct VectorDouble: Vector
 {
     public typealias Index = Int
-    public typealias Element = Float
+    public typealias Element = Double
     
     private var memory: ManagedMemory<Element>
     
@@ -34,10 +34,10 @@ public struct VectorFloat: Vector
         precondition(length >= 0, "Length must be positive.")
         
         memory = ManagedMemory<Element>(unfilledOfLength: length)
-        vDSP_vclr(memory[0], 1, vDSP_Length(length))
+        vDSP_vclrD(memory[0], 1, vDSP_Length(length))
     }
     
-    public init(copyOf vector: VectorFloat) {
+    public init(copyOf vector: VectorDouble) {
         // will copy on write
         memory = vector.memory
     }
@@ -61,7 +61,7 @@ public struct VectorFloat: Vector
         }
     }
     
-    private func ensureSameLength(_ vector: VectorFloat) {
+    private func ensureSameLength(_ vector: VectorDouble) {
         // must have matching lengths
         precondition(memory.length == vector.memory.length, "Vector lengths do not match (\(memory.length) and \(vector.memory.length))")
     }
@@ -85,25 +85,25 @@ public struct VectorFloat: Vector
     
     public func sum() -> Element {
         var ret: Element = 0
-        vDSP_sve(memory[0], 1, &ret, vDSP_Length(memory.length))
+        vDSP_sveD(memory[0], 1, &ret, vDSP_Length(memory.length))
         return ret
     }
     
     public func mean() -> Element {
         var ret: Element = 0
-        vDSP_meanv(memory[0], 1, &ret, vDSP_Length(memory.length))
+        vDSP_meanvD(memory[0], 1, &ret, vDSP_Length(memory.length))
         return ret
     }
     
     public func min() -> Element {
         var ret: Element = 0
-        vDSP_minv(memory[0], 1, &ret, vDSP_Length(memory.length))
+        vDSP_minvD(memory[0], 1, &ret, vDSP_Length(memory.length))
         return ret
     }
     
     public func max() -> Element {
         var ret: Element = 0
-        vDSP_maxv(memory[0], 1, &ret, vDSP_Length(memory.length))
+        vDSP_maxvD(memory[0], 1, &ret, vDSP_Length(memory.length))
         return ret
     }
     
@@ -114,7 +114,7 @@ public struct VectorFloat: Vector
         ensureUnique()
         
         // perform negation
-        vDSP_vneg(memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        vDSP_vnegD(memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceAddScalar(_ scalar: Element) {
@@ -123,10 +123,10 @@ public struct VectorFloat: Vector
         
         // perform add
         var scalar = scalar
-        vDSP_vsadd(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        vDSP_vsaddD(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
     }
     
-    mutating public func inPlaceAddVector(_ vector: VectorFloat) {
+    mutating public func inPlaceAddVector(_ vector: VectorDouble) {
         // must have matching lengths
         ensureSameLength(vector)
         
@@ -134,7 +134,7 @@ public struct VectorFloat: Vector
         ensureUnique()
         
         // perform addition
-        vDSP_vadd(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        vDSP_vaddD(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceSubtractScalar(_ scalar: Element) {
@@ -142,7 +142,7 @@ public struct VectorFloat: Vector
         inPlaceAddScalar(0 - scalar)
     }
     
-    mutating public func inPlaceSubtractVector(_ vector: VectorFloat) {
+    mutating public func inPlaceSubtractVector(_ vector: VectorDouble) {
         // must have matching lengths
         ensureSameLength(vector)
         
@@ -150,7 +150,8 @@ public struct VectorFloat: Vector
         ensureUnique()
         
         // perform addition
-        vDSP_vsub(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        vDSP_vsubD(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
+    
 }
 

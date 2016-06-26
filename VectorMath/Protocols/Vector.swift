@@ -25,6 +25,13 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     // ACCESS
     subscript(index: Index) -> Element { get set }
     
+    // 
+    
+    func mean() -> Element
+    func sum() -> Element
+    func min() -> Element
+    func max() -> Element
+    
     // IN-PLACE OPERATORS
     
     mutating func inPlaceNegate()

@@ -13,9 +13,11 @@
 		D85DAF371D200621003226EC /* ManagedMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85DAF361D200621003226EC /* ManagedMemoryTests.swift */; };
 		D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CB58511D1C43CD0018E323 /* VectorMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
-		D8CB585E1D1C43CD0018E323 /* VectorMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB585D1D1C43CD0018E323 /* VectorMathTests.swift */; };
 		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
 		D8CB586D1D1C45A10018E323 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB586C1D1C45A10018E323 /* Accelerate.framework */; };
+		D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */; };
+		D8FD04401D202EBA00EDBF64 /* VectorFloatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FD043F1D202EBA00EDBF64 /* VectorFloatTests.swift */; };
+		D8FD04421D202EC700EDBF64 /* VectorDoubleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FD04411D202EC700EDBF64 /* VectorDoubleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +39,12 @@
 		D8CB58511D1C43CD0018E323 /* VectorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
 		D8CB58531D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8CB58581D1C43CD0018E323 /* VectorMathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorMathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D8CB585D1D1C43CD0018E323 /* VectorMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMathTests.swift; sourceTree = "<group>"; };
 		D8CB585F1D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8CB58691D1C44730018E323 /* ManagedMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemory.swift; path = Internal/ManagedMemory.swift; sourceTree = "<group>"; };
 		D8CB586C1D1C45A10018E323 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorDouble.swift; path = Types/VectorDouble.swift; sourceTree = "<group>"; };
+		D8FD043F1D202EBA00EDBF64 /* VectorFloatTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorFloatTests.swift; sourceTree = "<group>"; };
+		D8FD04411D202EC700EDBF64 /* VectorDoubleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorDoubleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				D85696281D1D787700FDD6C4 /* VectorFloat.swift */,
+				D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -114,7 +119,8 @@
 		D8CB585C1D1C43CD0018E323 /* VectorMathTests */ = {
 			isa = PBXGroup;
 			children = (
-				D8CB585D1D1C43CD0018E323 /* VectorMathTests.swift */,
+				D8FD043F1D202EBA00EDBF64 /* VectorFloatTests.swift */,
+				D8FD04411D202EC700EDBF64 /* VectorDoubleTests.swift */,
 				D85DAF361D200621003226EC /* ManagedMemoryTests.swift */,
 				D8CB585F1D1C43CD0018E323 /* Info.plist */,
 			);
@@ -253,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
+				D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
 				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
 				D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */,
@@ -263,8 +270,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8FD04401D202EBA00EDBF64 /* VectorFloatTests.swift in Sources */,
 				D85DAF371D200621003226EC /* ManagedMemoryTests.swift in Sources */,
-				D8CB585E1D1C43CD0018E323 /* VectorMathTests.swift in Sources */,
+				D8FD04421D202EC700EDBF64 /* VectorDoubleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

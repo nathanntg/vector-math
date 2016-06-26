@@ -1,16 +1,15 @@
 //
-//  VectorMathTests.swift
-//  VectorMathTests
+//  VectorFloatTests.swift
+//  VectorMath
 //
-//  Created by Nathan Perkins on 6/23/16.
+//  Created by Nathan Perkins on 6/26/16.
 //  Copyright © 2016 MaxMo Technologies LLC. All rights reserved.
 //
 
 import XCTest
-@testable import VectorMath
+import VectorMath
 
-class VectorMathTests: XCTestCase {
-    
+class VectorFloatTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -43,6 +42,17 @@ class VectorMathTests: XCTestCase {
         let vector2: VectorFloat = [2.0, 3.0, 5.0, 7.0, 11.0, 13.0]
         XCTAssertEqual(vector2.count, 6)
         XCTAssertEqualWithAccuracy(vector2[4], 11.0, accuracy: 1e-7)
+    }
+    
+    func testSummarize() {
+        var arr = Array<Float>()
+        arr += (0..<10).map(Float.init)
+        
+        let vector = VectorFloat(fromArray: arr)
+        XCTAssertEqualWithAccuracy(vector.sum(), 45.0, accuracy: 1e-7)
+        XCTAssertEqualWithAccuracy(vector.mean(), 4.5, accuracy: 1e-7)
+        XCTAssertEqualWithAccuracy(vector.min(), 0.0, accuracy: 1e-7)
+        XCTAssertEqualWithAccuracy(vector.max(), 9.0, accuracy: 1e-7)
     }
     
     func testCollection() {
