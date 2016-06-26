@@ -81,6 +81,14 @@ public struct VectorFloat: Vector
     
     // IN-PLACE OPERATORS
     
+    mutating public func inPlaceNegate() {
+        // copy before write
+        ensureUnique()
+        
+        // perform negation
+        vDSP_vneg(memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
     mutating public func inPlaceAddScalar(_ scalar: Element) {
         // copy before write
         ensureUnique()

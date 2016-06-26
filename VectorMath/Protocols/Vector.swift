@@ -27,6 +27,8 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     
     // IN-PLACE OPERATORS
     
+    mutating func inPlaceNegate()
+    
     mutating func inPlaceAddScalar(_ scalar: Element)
     mutating func inPlaceAddVector(_ vector: Self)
     
@@ -34,6 +36,8 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     mutating func inPlaceSubtractVector(_ vector: Self)
     
     // OPERATORS
+    
+    func negate() -> Self
     
     func addScalar(_ scalar: Element) -> Self
     func addVector(_ vector: Self) -> Self
@@ -79,6 +83,12 @@ extension Vector where Element: CustomDebugStringConvertible {
 }
 
 extension Vector {
+    public func negate() -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceNegate()
+        return ret
+    }
+    
     public func addScalar(_ scalar: Element) -> Self {
         var ret = Self(copyOf: self)
         ret.inPlaceAddScalar(scalar)
@@ -138,7 +148,9 @@ public func -<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
     return lhs.subtractScalar(rhs)
 }
 
-// TODO: add scalar - vector option
+public func -<T: Vector, U where T.Element == U>(lhs: U, rhs: T) -> T {
+    return rhs.negate() + lhs
+}
 
 public func -<T: Vector>(lhs: T, rhs: T) -> T {
     return lhs.subtractVector(rhs)
