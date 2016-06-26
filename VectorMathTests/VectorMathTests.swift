@@ -21,60 +21,39 @@ class VectorMathTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testManagedMemory() {
-        let mm = ManagedMemory<Float>(unfilledOfLength: 20)
-        for i in 0..<20 {
-            mm[i] = Float(i)
-        }
-        for i in 0..<20 {
-            mm[i] += 1.0
-        }
-        for i in 0..<20 {
-            XCTAssertGreaterThan(mm[i], Float(i))
-        }
-    }
-    
-    func testManagedMemoryCopy() {
-        // initialize memory
-        let mm = ManagedMemory<Float>(unfilledOfLength: 10)
+    func testAddition() {
+        // properly allocated
+        var vector = VectorFloat(zerosOfLength: 10)
         for i in 0..<10 {
-            mm[i] = Float(i)
+            XCTAssertEqual(vector[i], 0.0)
         }
         
-        // copy memory
-        let mm2 = mm.copy()
+        // scalar addition
+        vector += 1.0
         for i in 0..<10 {
-            XCTAssertGreaterThanOrEqual(mm2[i], Float(i))
-            mm2[i] = 0
+            XCTAssertEqual(vector[i], 1.0)
         }
         
-        // ensure original memory is the same
+        // vector addition
+        vector += vector
         for i in 0..<10 {
-            XCTAssertGreaterThanOrEqual(mm[i], Float(i))
-            mm[i] = 0
+            XCTAssertEqual(vector[i], 2.0)
         }
         
-        // ensure new memory is correct
+        // ensure copy mechanics are working
+        let vector2 = vector
+        vector += 10.0
         for i in 0..<10 {
-            XCTAssertEqual(mm2[i], 0.0)
+            XCTAssertEqual(vector[i], 12.0)
+            XCTAssertEqual(vector2[i], 2.0)
         }
-    }
-    
-    func testManagedMemoryAligned() {
-        let mm = ManagedMemory<Float>(unfilledOfLength: 20, withAlignment: 0x4)
-        for i in 0..<20 {
-            mm[i] = Float(i)
-        }
-        for i in 0..<20 {
-            mm[i] += 1.0
-        }
-        for i in 0..<20 {
-            XCTAssertGreaterThan(mm[i], Float(i))
+        
+        // copy initializer
+        var vector3 = VectorFloat(copyOf: vector2)
+        vector3 += -2.0
+        XCTAssertEqual(vector3.length, 10)
+        for i in 0..<10 {
+            XCTAssertEqual(vector3[i], 0.0)
         }
     }
     
@@ -84,5 +63,4 @@ class VectorMathTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
 }
