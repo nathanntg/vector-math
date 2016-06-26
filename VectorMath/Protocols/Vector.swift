@@ -42,6 +42,12 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     mutating func inPlaceSubtractScalar(_ scalar: Element)
     mutating func inPlaceSubtractVector(_ vector: Self)
     
+    mutating func inPlaceMultiplyScalar(_ scalar: Element)
+    mutating func inPlaceMultiplyVector(_ vector: Self)
+    
+    mutating func inPlaceDivideScalar(_ scalar: Element)
+    mutating func inPlaceDivideVector(_ vector: Self)
+    
     // OPERATORS
     
     func negate() -> Self
@@ -51,6 +57,12 @@ public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomD
     
     func subtractScalar(_ scalar: Element) -> Self
     func subtractVector(_ vector: Self) -> Self
+    
+    func multiplyScalar(_ scalar: Element) -> Self
+    func multiplyVector(_ vector: Self) -> Self
+    
+    func divideScalar(_ scalar: Element) -> Self
+    func divideVector(_ vector: Self) -> Self
 }
 
 extension Vector where Index: Integer {
@@ -119,6 +131,30 @@ extension Vector {
         ret.inPlaceSubtractVector(vector)
         return ret
     }
+    
+    public func multiplyScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceMultiplyScalar(scalar)
+        return ret
+    }
+    
+    public func multiplyVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceMultiplyVector(vector)
+        return ret
+    }
+    
+    public func divideScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceDivideScalar(scalar)
+        return ret
+    }
+    
+    public func divideVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceDivideVector(vector)
+        return ret
+    }
 }
 
 // TODO: implement equatable
@@ -137,6 +173,22 @@ public func -=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
 
 public func -=<T: Vector>(lhs: inout T, rhs: T) {
     lhs.inPlaceSubtractVector(rhs)
+}
+
+public func *=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
+    lhs.inPlaceMultiplyScalar(rhs)
+}
+
+public func *=<T: Vector>(lhs: inout T, rhs: T) {
+    lhs.inPlaceMultiplyVector(rhs)
+}
+
+public func /=<T: Vector, U where T.Element == U>(lhs: inout T, rhs: U) {
+    lhs.inPlaceDivideScalar(rhs)
+}
+
+public func /=<T: Vector>(lhs: inout T, rhs: T) {
+    lhs.inPlaceDivideVector(rhs)
 }
 
 public func +<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
@@ -161,5 +213,24 @@ public func -<T: Vector, U where T.Element == U>(lhs: U, rhs: T) -> T {
 
 public func -<T: Vector>(lhs: T, rhs: T) -> T {
     return lhs.subtractVector(rhs)
-    
+}
+
+public func *<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
+    return lhs.multiplyScalar(rhs)
+}
+
+public func *<T: Vector, U where T.Element == U>(lhs: U, rhs: T) -> T {
+    return rhs.multiplyScalar(lhs)
+}
+
+public func *<T: Vector>(lhs: T, rhs: T) -> T {
+    return lhs.multiplyVector(rhs)
+}
+
+public func /<T: Vector, U where T.Element == U>(lhs: T, rhs: U) -> T {
+    return lhs.divideScalar(rhs)
+}
+
+public func /<T: Vector>(lhs: T, rhs: T) -> T {
+    return lhs.divideVector(rhs)
 }

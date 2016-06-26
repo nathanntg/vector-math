@@ -159,6 +159,78 @@ class VectorFloatTests: XCTestCase {
         }
     }
     
+    func testMultiplication() {
+        // in-place vector * scalar
+        var vector: VectorFloat = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+        vector *= 2.0
+        XCTAssertEqual(vector.length, 6)
+        for (i, n) in vector.enumerated() {
+            XCTAssertEqualWithAccuracy(Float(i) * 2.0, n, accuracy: 1e-7)
+        }
+        
+        // in-place vector * vector
+        vector *= vector
+        XCTAssertEqual(vector.length, 6)
+        for (i, n) in vector.enumerated() {
+            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 4.0, n, accuracy: 1e-7)
+        }
+        
+        // non-inplace vector * scalar
+        let vector3 = vector * 2.0
+        let vector4 = 2.0 * vector
+        XCTAssertEqual(vector3.length, 6)
+        XCTAssertEqual(vector4.length, 6)
+        for (i, n) in vector3.enumerated() {
+            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 4.0, vector[i], accuracy: 1e-7)
+            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 8.0, n, accuracy: 1e-7)
+            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 8.0, vector4[i], accuracy: 1e-7)
+        }
+        
+        // non-inplace vector * vector
+        let vector2: VectorFloat = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+        let vector5 = vector2 * vector2
+        XCTAssertEqual(vector5.length, 6)
+        for (i, n) in vector5.enumerated() {
+            XCTAssertEqualWithAccuracy(Float(i), vector2[i], accuracy: 1e-7)
+            XCTAssertEqualWithAccuracy(Float(i) * Float(i), n, accuracy: 1e-7)
+        }
+    }
+    
+    func testDivision() {
+        // in-place vector / scalar
+        var vector: VectorFloat = [0.0, 2.0, 4.0, 6.0, 8.0, 10.0]
+        vector /= 2.0
+        XCTAssertEqual(vector.length, 6)
+        for (i, n) in vector.enumerated() {
+            XCTAssertEqualWithAccuracy(Float(i), n, accuracy: 1e-7)
+        }
+        
+        // in-place vector / vector
+        var vector2: VectorFloat = [2.0, 4.0, 6.0, 8.0, 10.0]
+        vector2 /= vector2
+        XCTAssertEqual(vector.length, 6)
+        for n in vector2 {
+            XCTAssertEqualWithAccuracy(1.0, n, accuracy: 1e-7)
+        }
+        
+        // non-inplace vector / scalar
+        let vector3 = vector2 / 2.0
+        for (i, n) in vector2.enumerated() {
+            XCTAssertEqualWithAccuracy(1.0, n, accuracy: 1e-7)
+            XCTAssertEqualWithAccuracy(0.5, vector3[i], accuracy: 1e-7)
+        }
+        
+        // non-inplace vector / vector
+        let vector4 = vector2 / vector3
+        print("\(vector2)")
+        print("\(vector3)")
+        for (i, n) in vector4.enumerated() {
+            XCTAssertEqualWithAccuracy(2.0, n, accuracy: 1e-5)
+            XCTAssertEqualWithAccuracy(1.0, vector2[i], accuracy: 1e-5)
+            XCTAssertEqualWithAccuracy(0.5, vector3[i], accuracy: 1e-5)
+        }
+    }
+    
     func testPerformanceInPlace() {
         // This is an example of a performance test case.
         var vector = VectorFloat(zerosOfLength: 1000)
@@ -170,8 +242,10 @@ class VectorFloatTests: XCTestCase {
     func testPerformanceAllocate() {
         var vector = VectorFloat(zerosOfLength: 1000)
         self.measure {
-            let vector2 = vector + 1.0
-            vector = vector2 - 1.0
+            for _ in 0..<10000 {
+                let vector2 = vector + 1.0
+                vector = vector2 - 1.0
+            }
         }
     }
 }

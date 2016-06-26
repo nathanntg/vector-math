@@ -30,6 +30,13 @@ public struct VectorDouble: Vector
     
     // INITIALIZATION
     
+    // used internally to optimize addition / subtraction (skip copy)
+    internal init(unfilledOfLength length: Index) {
+        precondition(length >= 0, "Length must be positive.")
+        
+        memory = ManagedMemory<Element>(unfilledOfLength: length)
+    }
+    
     public init(zerosOfLength length: Index) {
         precondition(length >= 0, "Length must be positive.")
         
@@ -153,5 +160,125 @@ public struct VectorDouble: Vector
         vDSP_vsubD(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
+    mutating public func inPlaceMultiplyScalar(_ scalar: Element) {
+        // copy before write
+        ensureUnique()
+        
+        // perform multiplication
+        var scalar = scalar
+        vDSP_vsmulD(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
+    mutating public func inPlaceMultiplyVector(_ vector: VectorDouble) {
+        // copy before write
+        ensureUnique()
+        
+        // perform multiplication
+        vDSP_vmulD(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
+    mutating public func inPlaceDivideScalar(_ scalar: Element) {
+        // copy before write
+        ensureUnique()
+        
+        // perform multiplication
+        var scalar = scalar
+        vDSP_vsdivD(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
+    mutating public func inPlaceDivideVector(_ vector: VectorDouble) {
+        // copy before write
+        ensureUnique()
+        
+        // perform multiplication
+        vDSP_vdivD(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
+    // NON IN-PLACE OPERATORS
+    // Vector provides default implementations that use a copy, then the in place operator
+    // directly implementing these produce about a ~15% performance benefit
+    
+    public func addScalar(_ scalar: Element) -> VectorDouble {
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        var scalar = scalar
+        vDSP_vsaddD(memory[0], 1, &scalar, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func addVector(_ vector: VectorDouble) -> VectorDouble {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        vDSP_vaddD(memory[0], 1, vector.memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func subtractScalar(_ scalar: Element) -> VectorDouble {
+        // no vDSP subtraction
+        return addScalar(0 - scalar)
+    }
+    
+    public func subtractVector(_ vector: VectorDouble) -> VectorDouble {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        vDSP_vsubD(vector.memory[0], 1, memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func multiplyScalar(_ scalar: Element) -> VectorDouble {
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        var scalar = scalar
+        vDSP_vsmulD(memory[0], 1, &scalar, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func multiplyVector(_ vector: VectorDouble) -> VectorDouble {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        vDSP_vmulD(memory[0], 1, vector.memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func divideScalar(_ scalar: Element) -> VectorDouble {
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        var scalar = scalar
+        vDSP_vsdivD(memory[0], 1, &scalar, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    public func divideVector(_ vector: VectorDouble) -> VectorDouble {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // create return object
+        let ret = VectorDouble(unfilledOfLength: memory.length)
+        
+        // perform addition
+        vDSP_vdivD(vector.memory[0], 1, memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
 }
 
