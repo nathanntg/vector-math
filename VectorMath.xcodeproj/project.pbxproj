@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
+		D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696281D1D787700FDD6C4 /* VectorFloat.swift */; };
+		D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856962A1D1D84D400FDD6C4 /* Memory.swift */; };
 		D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CB58511D1C43CD0018E323 /* VectorMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
 		D8CB585E1D1C43CD0018E323 /* VectorMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB585D1D1C43CD0018E323 /* VectorMathTests.swift */; };
+		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
+		D8CB586D1D1C45A10018E323 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB586C1D1C45A10018E323 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +28,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
+		D85696281D1D787700FDD6C4 /* VectorFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorFloat.swift; path = Types/VectorFloat.swift; sourceTree = "<group>"; };
+		D856962A1D1D84D400FDD6C4 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memory.swift; path = Protocols/Memory.swift; sourceTree = "<group>"; };
 		D8CB584E1D1C43CD0018E323 /* VectorMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8CB58511D1C43CD0018E323 /* VectorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
 		D8CB58531D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8CB58581D1C43CD0018E323 /* VectorMathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorMathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8CB585D1D1C43CD0018E323 /* VectorMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMathTests.swift; sourceTree = "<group>"; };
 		D8CB585F1D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8CB58691D1C44730018E323 /* ManagedMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemory.swift; path = Internal/ManagedMemory.swift; sourceTree = "<group>"; };
+		D8CB586C1D1C45A10018E323 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8CB586D1D1C45A10018E323 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,12 +61,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D85696241D1D779100FDD6C4 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				D85696281D1D787700FDD6C4 /* VectorFloat.swift */,
+			);
+			name = Types;
+			sourceTree = "<group>";
+		};
+		D85696251D1D77AF00FDD6C4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D85696261D1D77C200FDD6C4 /* Vector.swift */,
+				D856962A1D1D84D400FDD6C4 /* Memory.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		D8CB58441D1C43CC0018E323 = {
 			isa = PBXGroup;
 			children = (
 				D8CB58501D1C43CD0018E323 /* VectorMath */,
 				D8CB585C1D1C43CD0018E323 /* VectorMathTests */,
 				D8CB584F1D1C43CD0018E323 /* Products */,
+				D8CB586B1D1C45A10018E323 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +100,9 @@
 		D8CB58501D1C43CD0018E323 /* VectorMath */ = {
 			isa = PBXGroup;
 			children = (
+				D85696251D1D77AF00FDD6C4 /* Protocols */,
+				D8CB58681D1C444C0018E323 /* Internal */,
+				D85696241D1D779100FDD6C4 /* Types */,
 				D8CB58511D1C43CD0018E323 /* VectorMath.h */,
 				D8CB58531D1C43CD0018E323 /* Info.plist */,
 			);
@@ -84,6 +116,22 @@
 				D8CB585F1D1C43CD0018E323 /* Info.plist */,
 			);
 			path = VectorMathTests;
+			sourceTree = "<group>";
+		};
+		D8CB58681D1C444C0018E323 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				D8CB58691D1C44730018E323 /* ManagedMemory.swift */,
+			);
+			name = Internal;
+			sourceTree = "<group>";
+		};
+		D8CB586B1D1C45A10018E323 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8CB586C1D1C45A10018E323 /* Accelerate.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +198,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = WRZPP65FJN;
 						DevelopmentTeamName = "Nathan Perkins";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 					D8CB58571D1C43CD0018E323 = {
@@ -200,6 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
+				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
+				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
+				D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +370,7 @@
 		D8CB58631D1C43CD0018E323 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -329,6 +383,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MaxMo.VectorMath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -336,6 +391,7 @@
 		D8CB58641D1C43CD0018E323 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -395,6 +451,7 @@
 				D8CB58641D1C43CD0018E323 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D8CB58651D1C43CD0018E323 /* Build configuration list for PBXNativeTarget "VectorMathTests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +460,7 @@
 				D8CB58671D1C43CD0018E323 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

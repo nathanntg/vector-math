@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D8CBD7FA1D1C4346002A81DA"
+               BlueprintIdentifier = "D8CB584D1D1C43CD0018E323"
                BuildableName = "VectorMath.framework"
                BlueprintName = "VectorMath"
                ReferencedContainer = "container:VectorMath.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D8CBD8041D1C4346002A81DA"
+               BlueprintIdentifier = "D8CB58571D1C43CD0018E323"
                BuildableName = "VectorMathTests.xctest"
                BlueprintName = "VectorMathTests"
                ReferencedContainer = "container:VectorMath.xcodeproj">
@@ -42,7 +42,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D8CBD7FA1D1C4346002A81DA"
+            BlueprintIdentifier = "D8CB584D1D1C43CD0018E323"
             BuildableName = "VectorMath.framework"
             BlueprintName = "VectorMath"
             ReferencedContainer = "container:VectorMath.xcodeproj">
@@ -64,7 +64,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D8CBD7FA1D1C4346002A81DA"
+            BlueprintIdentifier = "D8CB584D1D1C43CD0018E323"
             BuildableName = "VectorMath.framework"
             BlueprintName = "VectorMath"
             ReferencedContainer = "container:VectorMath.xcodeproj">
@@ -82,7 +82,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D8CBD7FA1D1C4346002A81DA"
+            BlueprintIdentifier = "D8CB584D1D1C43CD0018E323"
             BuildableName = "VectorMath.framework"
             BlueprintName = "VectorMath"
             ReferencedContainer = "container:VectorMath.xcodeproj">
