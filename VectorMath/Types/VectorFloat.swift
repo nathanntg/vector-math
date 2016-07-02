@@ -67,6 +67,43 @@ public struct VectorFloat: Vector
             memory = memory.copy()
         }
     }
+
+    // good idea, and well optimized by compiler
+    // RISK: not thread safe
+    // if old is not uniquely referenced at first, it may be deinit on another thread
+    // since this function will not retain it after returning
+//    mutating private func uniquePointerForWriting() -> (read: UnsafePointer<Element>, write: UnsafeMutablePointer<Element>) {
+//        if isUniquelyReferencedNonObjC(&memory) {
+//            // uniquely referenced memory, use the same pointer
+//            let ptr: UnsafeMutablePointer<Element> = memory[0]
+//            return (read: UnsafePointer<Element>(ptr), write: ptr)
+//        }
+//        else {
+//            // allocate new memory
+//            let old = memory
+//            memory = ManagedMemory(unfilledOfLength: old.length)
+//            
+//            // get pointers
+//            let ptrOld: UnsafeMutablePointer<Element> = old[0]
+//            let ptrNew: UnsafeMutablePointer<Element> = memory[0]
+//            
+//            // return both pointers
+//            return (read: UnsafePointer<Element>(ptrOld), write: ptrNew)
+//        }
+//    }
+    
+    mutating private func ensureUniqueWritableAndReturnReadable() -> ManagedMemory<Element> {
+        if isUniquelyReferencedNonObjC(&memory) {
+            // uniquely referenced memory, use the same pointer
+            return memory
+        }
+        else {
+            // allocate new memory
+            let old = memory
+            memory = ManagedMemory(unfilledOfLength: old.length)
+            return old
+        }
+    }
     
     private func ensureSameLength(_ vector: VectorFloat) {
         // must have matching lengths
@@ -127,38 +164,23 @@ public struct VectorFloat: Vector
     }
     
     mutating public func inPlaceAddScalar(_ scalar: Element) {
-        var scalar = scalar
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vsadd(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vsadd(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // perform addition
+        var scalar = scalar
+        vDSP_vsadd(read[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceAddVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vadd(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vadd(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform addition
+        vDSP_vadd(read[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceSubtractScalar(_ scalar: Element) {
@@ -170,88 +192,51 @@ public struct VectorFloat: Vector
         // must have matching lengths
         ensureSameLength(vector)
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vsub(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vsub(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform subtraction
+        vDSP_vsub(read[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceMultiplyScalar(_ scalar: Element) {
-        var scalar = scalar
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vsmul(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vsmul(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // perform multiplication
+        var scalar = scalar
+        vDSP_vsmul(read[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceMultiplyVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vmul(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vmul(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform multiplication
+        vDSP_vmul(read[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceDivideScalar(_ scalar: Element) {
-        var scalar = scalar
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vsdiv(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vsdiv(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // perform division
+        var scalar = scalar
+        vDSP_vsdiv(read[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceDivideVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        if isUniquelyReferencedNonObjC(&memory) {
-            // perform addition
-            vDSP_vdiv(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
-        else {
-            // copy on write
-            let old = memory
-            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
-            
-            // perform addition
-            vDSP_vdiv(vector.memory[0], 1, old[0], 1, memory[0], 1, vDSP_Length(memory.length))
-        }
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform division
+        vDSP_vdiv(vector.memory[0], 1, read[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     // NON IN-PLACE OPERATORS

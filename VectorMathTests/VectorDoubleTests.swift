@@ -236,7 +236,7 @@ class VectorDoubleTests: XCTestCase {
         // This is an example of a performance test case.
         var vector = VectorDouble(zerosOfLength: 1000)
         self.measure {
-            for _ in 0..<10000 {
+            for _ in 0..<100000 {
                 var vector2 = vector
                 vector += 1.0
                 vector2 += 1.0
@@ -247,7 +247,7 @@ class VectorDoubleTests: XCTestCase {
     func testPerformanceAllocate() {
         var vector = VectorDouble(zerosOfLength: 1000)
         self.measure {
-            for _ in 0..<10000 {
+            for _ in 0..<100000 {
                 let vector2 = vector + 1.0
                 vector = vector2 - 1.0
             }
