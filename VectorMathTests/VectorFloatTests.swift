@@ -235,7 +235,11 @@ class VectorFloatTests: XCTestCase {
         // This is an example of a performance test case.
         var vector = VectorFloat(zerosOfLength: 1000)
         self.measure {
-            vector += 1.0
+            for _ in 0..<10000 {
+                var vector2 = vector
+                vector += 1.0
+                vector2 += 1.0
+            }
         }
     }
     

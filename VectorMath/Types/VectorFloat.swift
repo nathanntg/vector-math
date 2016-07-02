@@ -55,7 +55,7 @@ public struct VectorFloat: Vector
         
         // copy elements
         var elements = elements
-        withUnsafePointer(&elements[0]) {
+        let _ = withUnsafePointer(&elements[0]) {
             memcpy(memory[0], $0, sizeof(Element) * elements.count)
         }
     }
@@ -127,23 +127,38 @@ public struct VectorFloat: Vector
     }
     
     mutating public func inPlaceAddScalar(_ scalar: Element) {
-        // copy before write
-        ensureUnique()
-        
-        // perform add
         var scalar = scalar
-        vDSP_vsadd(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vsadd(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vsadd(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceAddVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        // copy before write
-        ensureUnique()
-        
-        // perform addition
-        vDSP_vadd(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vadd(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vadd(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceSubtractScalar(_ scalar: Element) {
@@ -155,51 +170,88 @@ public struct VectorFloat: Vector
         // must have matching lengths
         ensureSameLength(vector)
         
-        // copy before write
-        ensureUnique()
-        
-        // perform addition
-        vDSP_vsub(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vsub(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vsub(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceMultiplyScalar(_ scalar: Element) {
-        // copy before write
-        ensureUnique()
-        
-        // perform multiplication
         var scalar = scalar
-        vDSP_vsmul(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vsmul(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vsmul(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceMultiplyVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        // copy before write
-        ensureUnique()
-        
-        // perform multiplication
-        vDSP_vmul(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vmul(memory[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vmul(old[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceDivideScalar(_ scalar: Element) {
-        // copy before write
-        ensureUnique()
-        
-        // perform multiplication
         var scalar = scalar
-        vDSP_vsdiv(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vsdiv(memory[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vsdiv(old[0], 1, &scalar, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     mutating public func inPlaceDivideVector(_ vector: VectorFloat) {
         // must have matching lengths
         ensureSameLength(vector)
         
-        // copy before write
-        ensureUnique()
-        
-        // perform multiplication
-        vDSP_vdiv(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        if isUniquelyReferencedNonObjC(&memory) {
+            // perform addition
+            vDSP_vdiv(vector.memory[0], 1, memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
+        else {
+            // copy on write
+            let old = memory
+            memory = ManagedMemory<Element>(unfilledOfLength: old.length)
+            
+            // perform addition
+            vDSP_vdiv(vector.memory[0], 1, old[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        }
     }
     
     // NON IN-PLACE OPERATORS
