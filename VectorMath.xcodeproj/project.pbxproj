@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */; };
+		D82238861D2ABDAA003B3A76 /* VectorInteger32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82238851D2ABDAA003B3A76 /* VectorInteger32Tests.swift */; };
 		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
 		D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696281D1D787700FDD6C4 /* VectorFloat.swift */; };
 		D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856962A1D1D84D400FDD6C4 /* Memory.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorInteger32.swift; path = Types/VectorInteger32.swift; sourceTree = "<group>"; };
+		D82238851D2ABDAA003B3A76 /* VectorInteger32Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorInteger32Tests.swift; sourceTree = "<group>"; };
 		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
 		D85696281D1D787700FDD6C4 /* VectorFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorFloat.swift; path = Types/VectorFloat.swift; sourceTree = "<group>"; };
 		D856962A1D1D84D400FDD6C4 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memory.swift; path = Protocols/Memory.swift; sourceTree = "<group>"; };
@@ -72,6 +76,7 @@
 			children = (
 				D85696281D1D787700FDD6C4 /* VectorFloat.swift */,
 				D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */,
+				D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			children = (
 				D8FD043F1D202EBA00EDBF64 /* VectorFloatTests.swift */,
 				D8FD04411D202EC700EDBF64 /* VectorDoubleTests.swift */,
+				D82238851D2ABDAA003B3A76 /* VectorInteger32Tests.swift */,
 				D85DAF361D200621003226EC /* ManagedMemoryTests.swift */,
 				D8CB585F1D1C43CD0018E323 /* Info.plist */,
 			);
@@ -258,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
 				D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
@@ -272,6 +279,7 @@
 			files = (
 				D8FD04401D202EBA00EDBF64 /* VectorFloatTests.swift in Sources */,
 				D85DAF371D200621003226EC /* ManagedMemoryTests.swift in Sources */,
+				D82238861D2ABDAA003B3A76 /* VectorInteger32Tests.swift in Sources */,
 				D8FD04421D202EC700EDBF64 /* VectorDoubleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

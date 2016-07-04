@@ -89,7 +89,7 @@ extension Vector {
     }
 }
 
-extension Vector where Element: CustomDebugStringConvertible {
+extension Vector where Element: CustomStringConvertible {
     public var debugDescription: String {
         let strings = map {
             return "\($0)"
