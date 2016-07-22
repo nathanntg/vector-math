@@ -61,7 +61,7 @@ class ManagedMemoryTests: XCTestCase {
     }
     
     func testManagedMemoryAligned() {
-        let mm = ManagedMemory<Float>(unfilledOfLength: 20, withAlignment: 0x4)
+        let mm = ManagedMemory<Float>(unfilledOfLength: 20, withAlignment: 0x10)
         for i in 0..<20 {
             mm[i] = Float(i)
         }

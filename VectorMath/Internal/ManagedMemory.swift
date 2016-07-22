@@ -29,7 +29,7 @@ final class ManagedMemory<T>: Memory {
     init(unfilledOfLength length: Int, withAlignment align: Int) {
         // use posix to make aligned memory
         var p: UnsafeMutablePointer<Void>? = nil
-        let ret = posix_memalign(&p, align, length * sizeof(T))
+        let ret = posix_memalign(&p, align, length * sizeof(T.self))
         
         // error check
         if ret != noErr {
