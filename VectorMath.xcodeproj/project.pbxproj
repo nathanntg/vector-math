@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D81B04671D41C8A40053594C /* VectorComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81B04661D41C8A40053594C /* VectorComplexFloat.swift */; };
 		D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */; };
 		D82238861D2ABDAA003B3A76 /* VectorInteger32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82238851D2ABDAA003B3A76 /* VectorInteger32Tests.swift */; };
 		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
@@ -17,6 +18,9 @@
 		D88796201D430BEF009439EB /* VectorSummarizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D887961F1D430BEF009439EB /* VectorSummarizable.swift */; };
 		D88796221D430C5B009439EB /* ManagedMemorySplitComplex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */; };
 		D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */; };
+		D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796251D430CB7009439EB /* ComplexFloat.swift */; };
+		D88796281D430F45009439EB /* VectorComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796271D430F45009439EB /* VectorComplexDouble.swift */; };
+		D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796291D430F5B009439EB /* ComplexDouble.swift */; };
 		D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CB58511D1C43CD0018E323 /* VectorMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
 		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
@@ -37,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D81B04661D41C8A40053594C /* VectorComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexFloat.swift; path = Types/VectorComplexFloat.swift; sourceTree = "<group>"; };
 		D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorInteger32.swift; path = Types/VectorInteger32.swift; sourceTree = "<group>"; };
 		D82238851D2ABDAA003B3A76 /* VectorInteger32Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorInteger32Tests.swift; sourceTree = "<group>"; };
 		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
@@ -47,6 +52,9 @@
 		D887961F1D430BEF009439EB /* VectorSummarizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorSummarizable.swift; path = Protocols/VectorSummarizable.swift; sourceTree = "<group>"; };
 		D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemorySplitComplex.swift; path = Internal/ManagedMemorySplitComplex.swift; sourceTree = "<group>"; };
 		D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemorySplitComplexDouble.swift; path = Internal/ManagedMemorySplitComplexDouble.swift; sourceTree = "<group>"; };
+		D88796251D430CB7009439EB /* ComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexFloat.swift; path = Types/ComplexFloat.swift; sourceTree = "<group>"; };
+		D88796271D430F45009439EB /* VectorComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexDouble.swift; path = Types/VectorComplexDouble.swift; sourceTree = "<group>"; };
+		D88796291D430F5B009439EB /* ComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexDouble.swift; path = Types/ComplexDouble.swift; sourceTree = "<group>"; };
 		D8CB584E1D1C43CD0018E323 /* VectorMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8CB58511D1C43CD0018E323 /* VectorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
 		D8CB58531D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,8 +90,12 @@
 		D85696241D1D779100FDD6C4 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				D88796251D430CB7009439EB /* ComplexFloat.swift */,
+				D88796291D430F5B009439EB /* ComplexDouble.swift */,
 				D85696281D1D787700FDD6C4 /* VectorFloat.swift */,
 				D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */,
+				D81B04661D41C8A40053594C /* VectorComplexFloat.swift */,
+				D88796271D430F45009439EB /* VectorComplexDouble.swift */,
 				D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */,
 			);
 			name = Types;
@@ -277,15 +289,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D88796201D430BEF009439EB /* VectorSummarizable.swift in Sources */,
+				D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */,
 				D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */,
+				D81B04671D41C8A40053594C /* VectorComplexFloat.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
 				D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
 				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
+				D88796281D430F45009439EB /* VectorComplexDouble.swift in Sources */,
 				D887961E1D430B73009439EB /* VectorArithmetic.swift in Sources */,
 				D88796221D430C5B009439EB /* ManagedMemorySplitComplex.swift in Sources */,
 				D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */,
 				D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */,
+				D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
