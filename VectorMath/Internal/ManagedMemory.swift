@@ -13,7 +13,7 @@ final class ManagedMemory<T>: Memory {
     typealias ElementType = T
     
     let length: Int
-    private let memory: UnsafeMutablePointer<T>
+    internal let memory: UnsafeMutablePointer<T>
     
     init(from memory: ManagedMemory<T>) {
         self.length = memory.length
@@ -69,102 +69,6 @@ final class ManagedMemory<T>: Memory {
         set {
             precondition(index >= 0 && index < length, "Index must fall within managed memory.")
             memory[index] = newValue
-        }
-    }
-}
-
-final class ManagedMemorySplitComplex: Memory {
-    typealias ElementType = DSPComplex
-    
-    let length: Int
-    let real: ManagedMemory<Float>
-    let imaginary: ManagedMemory<Float>
-    let complex: DSPSplitComplex
-    
-    init(real: ManagedMemory<Float>, imaginary: ManagedMemory<Float>) {
-        precondition(real.length == imaginary.length, "Real and imaginary memory must be the same length.")
-        
-        self.length = real.length
-        self.real = real
-        self.imaginary = imaginary
-        self.complex = DSPSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    init(unfilledOfLength length: Int) {
-        self.length = length
-        real = ManagedMemory<Float>(unfilledOfLength: length)
-        imaginary = ManagedMemory<Float>(unfilledOfLength: length)
-        complex = DSPSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    init(unfilledOfLength length: Int, withAlignment align: Int) {
-        self.length = length
-        real = ManagedMemory<Float>(unfilledOfLength: length, withAlignment:  align)
-        imaginary = ManagedMemory<Float>(unfilledOfLength: length, withAlignment:  align)
-        complex = DSPSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    func copy() -> ManagedMemorySplitComplex {
-        return ManagedMemorySplitComplex(real: real.copy(), imaginary: imaginary.copy())
-    }
-    
-    subscript(index: Int) -> DSPComplex {
-        get {
-            precondition(index >= 0 && index < length, "Index must fall within managed memory.")
-            return DSPComplex(real: real.memory[index], imag: real.memory[index])
-        }
-        set {
-            precondition(index >= 0 && index < length, "Index must fall within managed memory.")
-            real[index] = newValue.real
-            imaginary[index] = newValue.imag
-        }
-    }
-}
-
-final class ManagedMemorySplitComplexDouble: Memory {
-    typealias ElementType = DSPDoubleComplex
-    
-    let length: Int
-    let real: ManagedMemory<Double>
-    let imaginary: ManagedMemory<Double>
-    let complex: DSPDoubleSplitComplex
-    
-    init(real: ManagedMemory<Double>, imaginary: ManagedMemory<Double>) {
-        precondition(real.length == imaginary.length, "Real and imaginary memory must be the same length.")
-        
-        self.length = real.length
-        self.real = real
-        self.imaginary = imaginary
-        self.complex = DSPDoubleSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    init(unfilledOfLength length: Int) {
-        self.length = length
-        real = ManagedMemory<Double>(unfilledOfLength: length)
-        imaginary = ManagedMemory<Double>(unfilledOfLength: length)
-        complex = DSPDoubleSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    init(unfilledOfLength length: Int, withAlignment align: Int) {
-        self.length = length
-        real = ManagedMemory<Double>(unfilledOfLength: length, withAlignment:  align)
-        imaginary = ManagedMemory<Double>(unfilledOfLength: length, withAlignment:  align)
-        complex = DSPDoubleSplitComplex(realp: real[0], imagp: imaginary[0])
-    }
-    
-    func copy() -> ManagedMemorySplitComplexDouble {
-        return ManagedMemorySplitComplexDouble(real: real.copy(), imaginary: imaginary.copy())
-    }
-    
-    subscript(index: Int) -> DSPDoubleComplex {
-        get {
-            precondition(index >= 0 && index < length, "Index must fall within managed memory.")
-            return DSPDoubleComplex(real: real.memory[index], imag: real.memory[index])
-        }
-        set {
-            precondition(index >= 0 && index < length, "Index must fall within managed memory.")
-            real[index] = newValue.real
-            imaginary[index] = newValue.imag
         }
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-public struct VectorInteger32: Vector
+public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
 {
     public typealias Index = Int
     public typealias Element = Int32
@@ -57,7 +57,7 @@ public struct VectorInteger32: Vector
         // copy elements
         var elements = elements
         let _ = withUnsafePointer(&elements[0]) {
-            memcpy(memory[0], $0, sizeof(Element) * elements.count)
+            memcpy(memory[0], $0, sizeof(Element.self) * elements.count)
         }
     }
     

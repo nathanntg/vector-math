@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-public struct VectorFloat: Vector
+public struct VectorFloat: Vector, VectorSummarizable, VectorArithmetic
 {
     public typealias Index = Int
     public typealias Element = Float
@@ -56,7 +56,7 @@ public struct VectorFloat: Vector
         // copy elements
         var elements = elements
         let _ = withUnsafePointer(&elements[0]) {
-            memcpy(memory[0], $0, sizeof(Element) * elements.count)
+            memcpy(memory[0], $0, sizeof(Element.self) * elements.count)
         }
     }
     
@@ -156,11 +156,11 @@ public struct VectorFloat: Vector
     // the memory is uniquely referenced or not
     
     mutating public func inPlaceNegate() {
-        // copy before write
-        ensureUnique()
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
         
         // perform negation
-        vDSP_vneg(memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+        vDSP_vneg(read[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
     mutating public func inPlaceAddScalar(_ scalar: Element) {
