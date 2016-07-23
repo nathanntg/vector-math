@@ -12,33 +12,69 @@ public protocol VectorArithmetic: Vector
     
     mutating func inPlaceNegate()
     
+    // self = self + arg
+    
     mutating func inPlaceAddScalar(_ scalar: Element)
     mutating func inPlaceAddVector(_ vector: Self)
+
+    // self = self - arg
     
     mutating func inPlaceSubtractScalar(_ scalar: Element)
     mutating func inPlaceSubtractVector(_ vector: Self)
+
+    // self = arg - self
+    
+    mutating func inPlaceSubtractFromScalar(_ scalar: Element)
+    mutating func inPlaceSubtractFromVector(_ vector: Self)
+    
+    // self = arg * self
     
     mutating func inPlaceMultiplyScalar(_ scalar: Element)
     mutating func inPlaceMultiplyVector(_ vector: Self)
     
+    // self = self / arg
+    
     mutating func inPlaceDivideScalar(_ scalar: Element)
     mutating func inPlaceDivideVector(_ vector: Self)
+    
+    // self = arg / self
+    
+    mutating func inPlaceDivideIntoScalar(_ scalar: Element)
+    mutating func inPlaceDivideIntoVector(_ vector: Self)
     
     // OPERATORS
     
     func negate() -> Self
     
+    // self + arg
+    
     func addScalar(_ scalar: Element) -> Self
     func addVector(_ vector: Self) -> Self
+    
+    // self - arg
     
     func subtractScalar(_ scalar: Element) -> Self
     func subtractVector(_ vector: Self) -> Self
     
+    // arg - self
+    
+    func subtractFromScalar(_ scalar: Element) -> Self
+    func subtractFromVector(_ vector: Self) -> Self
+    
+    // self * arg
+    
     func multiplyScalar(_ scalar: Element) -> Self
     func multiplyVector(_ vector: Self) -> Self
     
+    // self / arg
+    
     func divideScalar(_ scalar: Element) -> Self
     func divideVector(_ vector: Self) -> Self
+    
+    // arg / self
+    
+    func divideIntoScalar(_ scalar: Element) -> Self
+    func divideIntoVector(_ vector: Self) -> Self
 }
 
 extension VectorArithmetic {
@@ -72,6 +108,18 @@ extension VectorArithmetic {
         return ret
     }
     
+    public func subtractFromScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceSubtractFromScalar(scalar)
+        return ret
+    }
+    
+    public func subtractFromVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceSubtractFromVector(vector)
+        return ret
+    }
+    
     public func multiplyScalar(_ scalar: Element) -> Self {
         var ret = Self(copyOf: self)
         ret.inPlaceMultiplyScalar(scalar)
@@ -93,6 +141,18 @@ extension VectorArithmetic {
     public func divideVector(_ vector: Self) -> Self {
         var ret = Self(copyOf: self)
         ret.inPlaceDivideVector(vector)
+        return ret
+    }
+    
+    public func divideIntoScalar(_ scalar: Element) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceDivideIntoScalar(scalar)
+        return ret
+    }
+    
+    public func divideIntoVector(_ vector: Self) -> Self {
+        var ret = Self(copyOf: self)
+        ret.inPlaceDivideIntoVector(vector)
         return ret
     }
 }
@@ -148,7 +208,7 @@ public func -<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T 
 }
 
 public func -<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
-    return rhs.negate() + lhs
+    return rhs.subtractFromScalar(lhs)
 }
 
 public func -<T: VectorArithmetic>(lhs: T, rhs: T) -> T {
@@ -169,6 +229,10 @@ public func *<T: VectorArithmetic>(lhs: T, rhs: T) -> T {
 
 public func /<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T {
     return lhs.divideScalar(rhs)
+}
+
+public func /<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
+    return rhs.divideIntoScalar(lhs)
 }
 
 public func /<T: VectorArithmetic>(lhs: T, rhs: T) -> T {

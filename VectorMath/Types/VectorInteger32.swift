@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
+public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, Equatable
 {
     public typealias Index = Int
     public typealias Element = Int32
@@ -200,6 +200,25 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
         }
     }
     
+    mutating public func inPlaceSubtractFromScalar(_ scalar: Element) {
+        // no vDSP subtraction
+        inPlaceNegate()
+        inPlaceAddScalar(scalar)
+    }
+    
+    mutating public func inPlaceSubtractFromVector(_ vector: VectorInteger32) {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform subtraction
+        for i in 0..<memory.length {
+            memory[i] = vector.memory[i] - read[i]
+        }
+    }
+    
     mutating public func inPlaceMultiplyScalar(_ scalar: Element) {
         // copy on write
         let read = ensureUniqueWritableAndReturnReadable()
@@ -243,9 +262,41 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
         vDSP_vdivi(vector.memory[0], 1, read[0], 1, memory[0], 1, vDSP_Length(memory.length))
     }
     
+    mutating public func inPlaceDivideIntoScalar(_ scalar: Element) {
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform division
+        for i in 0..<memory.length {
+            memory[i] = scalar / read[i]
+        }
+    }
+    
+    mutating public func inPlaceDivideIntoVector(_ vector: VectorInteger32) {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // copy on write
+        let read = ensureUniqueWritableAndReturnReadable()
+        
+        // perform division
+        vDSP_vdivi(read[0], 1, vector.memory[0], 1, memory[0], 1, vDSP_Length(memory.length))
+    }
+    
     // NON IN-PLACE OPERATORS
     // Vector provides default implementations that use a copy, then the in place operator
     // directly implementing these produce about a ~15% performance benefit
+    
+    public func negate() -> VectorInteger32 {
+        // create return object
+        let ret = VectorInteger32(unfilledOfLength: memory.length)
+        
+        // perform negation
+        for i in 0..<memory.length {
+            ret.memory[i] = 0 - memory[i]
+        }
+        return ret
+    }
     
     public func addScalar(_ scalar: Element) -> VectorInteger32 {
         // create return object
@@ -274,6 +325,13 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
         return addScalar(0 - scalar)
     }
     
+    public func subtractFromScalar(_ scalar: Element) -> VectorInteger32 {
+        // no vDSP subtraction
+        var ret = negate()
+        ret.inPlaceAddScalar(scalar)
+        return ret
+    }
+    
     // potentially implement: public func subtractVector(_ vector: VectorInteger32) -> VectorInteger32
     
     // potentially implement: public func multiplyScalar(_ scalar: Element) -> VectorInteger32
@@ -299,6 +357,20 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic
         
         // perform addition
         vDSP_vdivi(vector.memory[0], 1, memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
+        return ret
+    }
+    
+    // potentially implement: public func divideIntoScalar(_ scalar: Element) -> VectorInteger32
+    
+    public func divideIntoVector(_ vector: VectorInteger32) -> VectorInteger32 {
+        // must have matching lengths
+        ensureSameLength(vector)
+        
+        // create return object
+        let ret = VectorInteger32(unfilledOfLength: memory.length)
+        
+        // perform addition
+        vDSP_vdivi(memory[0], 1, vector.memory[0], 1, ret.memory[0], 1, vDSP_Length(memory.length))
         return ret
     }
 }

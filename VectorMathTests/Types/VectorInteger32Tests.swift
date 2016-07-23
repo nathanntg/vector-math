@@ -177,6 +177,28 @@ class VectorInteger32Tests: XCTestCase {
         AssertVector(vector3, ofLength: 5, withValuesEqualTo: 0)
     }
     
+    func testDivisionInto() {
+        // in-place scalar / vector
+        var vector: VectorInteger32 = [1, 2, 3, 4, 6]
+        vector.inPlaceDivideIntoScalar(12)
+        AssertVectorEqual(vector, [12, 6, 4, 3, 2])
+        
+        // in-place vector / vector
+        var vector2: VectorInteger32 = [2, 2, 2, 1, 2]
+        vector2.inPlaceDivideIntoVector(vector)
+        AssertVectorEqual(vector2, [6, 3, 2, 3, 1])
+        
+        // out-of-place vector / vector
+        let vector3: VectorInteger32 = [18, 18, 18, 18, 18]
+        let vector4 = vector2.divideIntoVector(vector3)
+        AssertVectorEqual(vector4, [3, 6, 9, 6, 18])
+        
+        // out-of-place scalar / vector
+        let vector5 = 36 / vector4
+        AssertVectorEqual(vector4, [3, 6, 9, 6, 18])
+        AssertVectorEqual(vector5, [12, 6, 4, 6, 2])
+    }
+    
     func testPerformanceInPlace() {
         // This is an example of a performance test case.
         var vector = VectorInteger32(zerosOfLength: 1000)

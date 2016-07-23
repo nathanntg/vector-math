@@ -11,23 +11,32 @@ import Foundation
 @testable import VectorMath
 
 func AssertVectorEqual<T: Vector where T.Index == Int, T.Element: Equatable>(_ a: T, _ b: T, file: StaticString = #file, line: UInt = #line) {
-    XCTAssertEqual(a.length, b.length, "expected a.length == b.length", file: file, line: line)
+    guard a.length == b.length else {
+        XCTFail("expected a.length == b.length", file: file, line: line)
+        return
+    }
     
     for i in 0..<a.length {
         XCTAssertEqual(a[i], b[i], "expected a[\(i)] == b[\(i)]", file: file, line: line)
     }
 }
 
-func AssertVectorEqualWithAccuracy<T: Vector where T.Index == Int, T.Element == Float>(_ a: T, _ b: T, accuracy: Float = 1e-7, file: StaticString = #file, line: UInt = #line) {
-    XCTAssertEqual(a.length, b.length, "expected a.length == b.length", file: file, line: line)
+func AssertVectorEqualWithAccuracy<T: Vector where T.Index == Int, T.Element == Float>(_ a: T, _ b: T, accuracy: Float = 1e-6, file: StaticString = #file, line: UInt = #line) {
+    guard a.length == b.length else {
+        XCTFail("expected a.length == b.length", file: file, line: line)
+        return
+    }
     
     for i in 0..<a.length {
         XCTAssertEqualWithAccuracy(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)
     }
 }
 
-func AssertVectorEqualWithAccuracy<T: Vector where T.Index == Int, T.Element == Double>(_ a: T, _ b: T, accuracy: Double = 1e-10, file: StaticString = #file, line: UInt = #line) {
-    XCTAssertEqual(a.length, b.length, "expected a.length == b.length", file: file, line: line)
+func AssertVectorEqualWithAccuracy<T: Vector where T.Index == Int, T.Element == Double>(_ a: T, _ b: T, accuracy: Double = 1e-12, file: StaticString = #file, line: UInt = #line) {
+    guard a.length == b.length else {
+        XCTFail("expected a.length == b.length", file: file, line: line)
+        return
+    }
     
     for i in 0..<a.length {
         XCTAssertEqualWithAccuracy(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)

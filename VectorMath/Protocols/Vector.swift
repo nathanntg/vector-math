@@ -61,3 +61,17 @@ extension Vector where Element: CustomStringConvertible {
         return "[\(string)]"
     }
 }
+
+public func ==<T: Vector where T.Element: Equatable, T.Index == Int>(lhs: T, rhs: T) -> Bool {
+    if rhs.length != lhs.length {
+        return false
+    }
+    
+    for i in 0..<rhs.length {
+        if rhs[i] != lhs[i] {
+            return false
+        }
+    }
+    
+    return true
+}

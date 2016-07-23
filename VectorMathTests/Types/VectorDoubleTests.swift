@@ -176,6 +176,48 @@ class VectorDoubleTests: XCTestCase {
         AssertVector(vector4, ofLength: 5, withValuesApproximatelyEqualTo: 2)
         AssertVector(vector2, ofLength: 5, withValuesApproximatelyEqualTo: 1)
         AssertVector(vector3, ofLength: 5, withValuesApproximatelyEqualTo: 0.5)
+        
+        // infinity
+        var vector5: VectorDouble = [0, 0, 0]
+        vector5 /= 0
+        XCTAssert(vector5[0].isNaN, "isNaN")
+        
+        // nan
+        var vector6: VectorDouble = [1, 1, 1]
+        vector6 /= 0
+        XCTAssert(vector6[0].isInfinite, "isInfinite")
+    }
+    
+    func testDivisionInto() {
+        // in-place scalar / vector
+        var vector: VectorDouble = [1.0, 2.0, 4.0, 5.0]
+        vector.inPlaceDivideIntoScalar(1)
+        AssertVectorEqualWithAccuracy(vector, [1, 0.5, 0.25, 0.2])
+        
+        // in-place vector / vector
+        var vector2: VectorDouble = [1, 0.1, 0.01, 0.001]
+        vector2.inPlaceDivideIntoVector(vector)
+        AssertVectorEqualWithAccuracy(vector2, [1, 5, 25, 200])
+        
+        // out-of-place vector / vector
+        let vector3: VectorDouble = [1000, 1000, 1000, 1000]
+        let vector4 = vector2.divideIntoVector(vector3)
+        AssertVectorEqualWithAccuracy(vector4, [1000, 200, 40, 5])
+        
+        // out-of-place scalar / vector
+        let vector5 = 1 / vector3
+        AssertVectorEqualWithAccuracy(vector3, [1000, 1000, 1000, 1000])
+        AssertVectorEqualWithAccuracy(vector5, [0.001, 0.001, 0.001, 0.001])
+        
+        // infinity
+        var vector6: VectorDouble = [0, 0, 0, 0]
+        vector6.inPlaceDivideIntoScalar(1)
+        XCTAssert(vector6[0].isInfinite, "isInfinite")
+        
+        // nan
+        var vector7: VectorDouble = [0, 0, 0, 0]
+        vector7.inPlaceDivideIntoScalar(0)
+        XCTAssert(vector7[0].isNaN, "isNaN")
     }
     
     func testPerformanceInPlace() {
