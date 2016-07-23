@@ -22,11 +22,8 @@ class VectorFloatTests: XCTestCase {
     
     func testCreation() {
         // properly allocated
-        var vector = VectorFloat(zerosOfLength: 10)
-        XCTAssertEqual(vector.count, 10)
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector[i], 0.0, accuracy: 1e-7)
-        }
+        let vector = VectorFloat(zerosOfLength: 10)
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 0)
     }
     
     func testFromArray() {
@@ -34,11 +31,9 @@ class VectorFloatTests: XCTestCase {
         arr += (0..<10).map(Float.init)
         
         let vector = VectorFloat(fromArray: arr)
-        XCTAssertEqual(vector.count, arr.count)
-        for (i, j) in vector.enumerated() {
-            XCTAssertEqual(Float(i), j)
-        }
+        AssertVectorEqualWithAccuracy(vector, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         
+        // manually test just in case something is wrong with initialization, since that would affect test argument
         let vector2: VectorFloat = [2.0, 3.0, 5.0, 7.0, 11.0, 13.0]
         XCTAssertEqual(vector2.count, 6)
         XCTAssertEqualWithAccuracy(vector2[4], 11.0, accuracy: 1e-7)
@@ -63,11 +58,12 @@ class VectorFloatTests: XCTestCase {
             vector[i] = Float(i)
         }
         
-        // test assignment and iteration over collection
+        // test enumeration and values
         for (i, j) in vector.enumerated() {
             XCTAssertEqualWithAccuracy(Float(i), j, accuracy: 1e-7)
         }
         
+        // edit and re-enumerate
         vector += 5.0
         for (i, j) in vector.enumerated() {
             XCTAssertEqualWithAccuracy(Float(i) + 5.0, j, accuracy: 1e-7)
@@ -80,42 +76,31 @@ class VectorFloatTests: XCTestCase {
         
         // scalar addition
         vector += 1.0
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector[i], 1.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 1)
         
         // vector addition
         vector += vector
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector[i], 2.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 2)
         
         // ensure copy mechanics are working
         let vector2 = vector
         vector += 10.0
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector[i], 12.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(vector2[i], 2.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 12)
+        AssertVector(vector2, ofLength: 10, withValuesApproximatelyEqualTo: 2)
         
         // copy initializer
         var vector3 = VectorFloat(copyOf: vector2)
         vector3 += -2.0
-        XCTAssertEqual(vector3.length, 10)
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector3[i], 0.0, accuracy: 1e-7)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesApproximatelyEqualTo: 0)
         
         // non-inplace operators
         let vector4 = vector3 + 25.0
         let vector5 = 25.0 + vector3
         let vector6 = vector4 + vector5
-        for i in 0..<10 {
-            XCTAssertEqualWithAccuracy(vector3[i], 0.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(vector4[i], 25.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(vector5[i], 25.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(vector6[i], 50.0, accuracy: 1e-7)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesApproximatelyEqualTo: 0)
+        AssertVector(vector4, ofLength: 10, withValuesApproximatelyEqualTo: 25)
+        AssertVector(vector5, ofLength: 10, withValuesApproximatelyEqualTo: 25)
+        AssertVector(vector6, ofLength: 10, withValuesApproximatelyEqualTo: 50)
     }
     
     func testSubtraction() {
@@ -123,112 +108,74 @@ class VectorFloatTests: XCTestCase {
         
         // scalar subtraction
         vector -= 5.0
-        for n in vector {
-            XCTAssertEqualWithAccuracy(n, -5.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: -5)
         
         // vector subtraction
         vector -= vector
-        for n in vector {
-            XCTAssertEqualWithAccuracy(n, 0.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 0)
         
         // non-inplace scalar subtraction
         let vector2 = vector - 3.0
-        XCTAssertEqual(vector2.length, vector.length)
-        for (i, n) in vector2.enumerated() {
-            XCTAssertEqualWithAccuracy(vector[i], 0.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(n, -3.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 0)
+        AssertVector(vector2, ofLength: 10, withValuesApproximatelyEqualTo: -3)
         
         // non-inplace vector subtraction
         let vector3 = vector2 - (vector + 7.0)
-        XCTAssertEqual(vector3.length, vector.length)
-        for (i, n) in vector3.enumerated() {
-            XCTAssertEqualWithAccuracy(vector[i], 0.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(vector2[i], -3.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(n, -10.0, accuracy: 1e-7)
-        }
+        AssertVector(vector, ofLength: 10, withValuesApproximatelyEqualTo: 0)
+        AssertVector(vector2, ofLength: 10, withValuesApproximatelyEqualTo: -3)
+        AssertVector(vector3, ofLength: 10, withValuesApproximatelyEqualTo: -10)
         
         // non-inplace scalar vector subtraction
         let vector4 = 0.0 - vector3
-        XCTAssertEqual(vector4.length, vector.length)
-        for (i, n) in vector4.enumerated() {
-            XCTAssertEqualWithAccuracy(vector3[i], -10.0, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(n, 10.0, accuracy: 1e-7)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesApproximatelyEqualTo: -10)
+        AssertVector(vector4, ofLength: 10, withValuesApproximatelyEqualTo: 10)
     }
     
     func testMultiplication() {
         // in-place vector * scalar
         var vector: VectorFloat = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
         vector *= 2.0
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i) * 2.0, n, accuracy: 1e-7)
-        }
+        AssertVectorEqualWithAccuracy(vector, [0, 2, 4, 6, 8, 10])
         
         // in-place vector * vector
         vector *= vector
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 4.0, n, accuracy: 1e-7)
-        }
+        AssertVectorEqualWithAccuracy(vector, [0, 4, 16, 36, 64, 100])
         
         // non-inplace vector * scalar
         let vector3 = vector * 2.0
         let vector4 = 2.0 * vector
-        XCTAssertEqual(vector3.length, 6)
-        XCTAssertEqual(vector4.length, 6)
-        for (i, n) in vector3.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 4.0, vector[i], accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 8.0, n, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(Float(i) * Float(i) * 8.0, vector4[i], accuracy: 1e-7)
-        }
+        AssertVectorEqualWithAccuracy(vector, [0, 4, 16, 36, 64, 100])
+        AssertVectorEqualWithAccuracy(vector3, [0, 8, 32, 72, 128, 200])
+        AssertVectorEqualWithAccuracy(vector4, [0, 8, 32, 72, 128, 200])
         
         // non-inplace vector * vector
         let vector2: VectorFloat = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
         let vector5 = vector2 * vector2
-        XCTAssertEqual(vector5.length, 6)
-        for (i, n) in vector5.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i), vector2[i], accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(Float(i) * Float(i), n, accuracy: 1e-7)
-        }
+        AssertVectorEqualWithAccuracy(vector2, [0, 1, 2, 3, 4, 5])
+        AssertVectorEqualWithAccuracy(vector5, [0, 1, 4, 9, 16, 25])
     }
     
     func testDivision() {
         // in-place vector / scalar
         var vector: VectorFloat = [0.0, 2.0, 4.0, 6.0, 8.0, 10.0]
         vector /= 2.0
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i), n, accuracy: 1e-7)
-        }
+        AssertVectorEqualWithAccuracy(vector, [0, 1, 2, 3, 4, 5])
         
         // in-place vector / vector
         var vector2: VectorFloat = [2.0, 4.0, 6.0, 8.0, 10.0]
         vector2 /= vector2
-        XCTAssertEqual(vector.length, 6)
-        for n in vector2 {
-            XCTAssertEqualWithAccuracy(1.0, n, accuracy: 1e-7)
-        }
+        AssertVector(vector2, ofLength: 5, withValuesApproximatelyEqualTo: 1)
         
         // non-inplace vector / scalar
         let vector3 = vector2 / 2.0
-        for (i, n) in vector2.enumerated() {
-            XCTAssertEqualWithAccuracy(1.0, n, accuracy: 1e-7)
-            XCTAssertEqualWithAccuracy(0.5, vector3[i], accuracy: 1e-7)
-        }
+        AssertVector(vector2, ofLength: 5, withValuesApproximatelyEqualTo: 1)
+        AssertVector(vector3, ofLength: 5, withValuesApproximatelyEqualTo: 0.5)
         
         // non-inplace vector / vector
         let vector4 = vector2 / vector3
-        print("\(vector2)")
-        print("\(vector3)")
-        for (i, n) in vector4.enumerated() {
-            XCTAssertEqualWithAccuracy(2.0, n, accuracy: 1e-5)
-            XCTAssertEqualWithAccuracy(1.0, vector2[i], accuracy: 1e-5)
-            XCTAssertEqualWithAccuracy(0.5, vector3[i], accuracy: 1e-5)
-        }
+        AssertVector(vector4, ofLength: 5, withValuesApproximatelyEqualTo: 2)
+        AssertVector(vector2, ofLength: 5, withValuesApproximatelyEqualTo: 1)
+        AssertVector(vector3, ofLength: 5, withValuesApproximatelyEqualTo: 0.5)
     }
     
     func testPerformanceInPlace() {

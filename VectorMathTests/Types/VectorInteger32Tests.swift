@@ -22,11 +22,8 @@ class VectorInteger32Tests: XCTestCase {
     
     func testCreation() {
         // properly allocated
-        var vector = VectorInteger32(zerosOfLength: 10)
-        XCTAssertEqual(vector.count, 10)
-        for i in 0..<10 {
-            XCTAssertEqual(vector[i], 0)
-        }
+        let vector = VectorInteger32(zerosOfLength: 10)
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 0)
     }
     
     func testFromArray() {
@@ -34,11 +31,9 @@ class VectorInteger32Tests: XCTestCase {
         arr += 0..<10
         
         let vector = VectorInteger32(fromArray: arr)
-        XCTAssertEqual(vector.count, arr.count)
-        for (i, j) in vector.enumerated() {
-            XCTAssertEqual(Int32(i), j)
-        }
+        AssertVectorEqual(vector, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
         
+        // manually test just in case something is wrong with initialization, since that would affect test argument
         let vector2: VectorInteger32 = [2, 3, 5, 7, 11, 13]
         XCTAssertEqual(vector2.count, 6)
         XCTAssertEqual(vector2[4], 11)
@@ -63,7 +58,7 @@ class VectorInteger32Tests: XCTestCase {
             vector[i] = Int32(i)
         }
         
-        // test assignment and iteration over collection
+        // test enumeration and values
         for (i, j) in vector.enumerated() {
             XCTAssertEqual(Int32(i), j)
         }
@@ -80,42 +75,31 @@ class VectorInteger32Tests: XCTestCase {
         
         // scalar addition
         vector += 1
-        for i in 0..<10 {
-            XCTAssertEqual(vector[i], 1)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 1)
         
         // vector addition
         vector += vector
-        for i in 0..<10 {
-            XCTAssertEqual(vector[i], 2)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 2)
         
         // ensure copy mechanics are working
         let vector2 = vector
         vector += 10
-        for i in 0..<10 {
-            XCTAssertEqual(vector[i], 12)
-            XCTAssertEqual(vector2[i], 2)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 12)
+        AssertVector(vector2, ofLength: 10, withValuesEqualTo: 2)
         
         // copy initializer
         var vector3 = VectorInteger32(copyOf: vector2)
         vector3 += -2
-        XCTAssertEqual(vector3.length, 10)
-        for i in 0..<10 {
-            XCTAssertEqual(vector3[i], 0)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesEqualTo: 0)
         
         // non-inplace operators
         let vector4 = vector3 + 25
         let vector5 = 25 + vector3
         let vector6 = vector4 + vector5
-        for i in 0..<10 {
-            XCTAssertEqual(vector3[i], 0)
-            XCTAssertEqual(vector4[i], 25)
-            XCTAssertEqual(vector5[i], 25)
-            XCTAssertEqual(vector6[i], 50)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesEqualTo: 0)
+        AssertVector(vector4, ofLength: 10, withValuesEqualTo: 25)
+        AssertVector(vector5, ofLength: 10, withValuesEqualTo: 25)
+        AssertVector(vector6, ofLength: 10, withValuesEqualTo: 50)
     }
     
     func testSubtraction() {
@@ -123,110 +107,74 @@ class VectorInteger32Tests: XCTestCase {
         
         // scalar subtraction
         vector -= 5
-        for n in vector {
-            XCTAssertEqual(n, -5)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: -5)
         
         // vector subtraction
         vector -= vector
-        for n in vector {
-            XCTAssertEqual(n, 0)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 0)
         
         // non-inplace scalar subtraction
         let vector2 = vector - 3
-        XCTAssertEqual(vector2.length, vector.length)
-        for (i, n) in vector2.enumerated() {
-            XCTAssertEqual(vector[i], 0)
-            XCTAssertEqual(n, -3)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 0)
+        AssertVector(vector2, ofLength: 10, withValuesEqualTo: -3)
         
         // non-inplace vector subtraction
         let vector3 = vector2 - (vector + 7)
-        XCTAssertEqual(vector3.length, vector.length)
-        for (i, n) in vector3.enumerated() {
-            XCTAssertEqual(vector[i], 0)
-            XCTAssertEqual(vector2[i], -3)
-            XCTAssertEqual(n, -10)
-        }
+        AssertVector(vector, ofLength: 10, withValuesEqualTo: 0)
+        AssertVector(vector2, ofLength: 10, withValuesEqualTo: -3)
+        AssertVector(vector3, ofLength: 10, withValuesEqualTo: -10)
         
         // non-inplace scalar vector subtraction
         let vector4 = 0 - vector3
-        XCTAssertEqual(vector4.length, vector.length)
-        for (i, n) in vector4.enumerated() {
-            XCTAssertEqual(vector3[i], -10)
-            XCTAssertEqual(n, 10)
-        }
+        AssertVector(vector3, ofLength: 10, withValuesEqualTo: -10)
+        AssertVector(vector4, ofLength: 10, withValuesEqualTo: 10)
     }
     
     func testMultiplication() {
         // in-place vector * scalar
         var vector: VectorInteger32 = [0, 1, 2, 3, 4, 5]
         vector *= 2
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqual(Int32(i) * 2, n)
-        }
+        AssertVectorEqual(vector, [0, 2, 4, 6, 8, 10])
         
         // in-place vector * vector
         vector *= vector
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqual(Int32(i) * Int32(i) * 4, n)
-        }
+        AssertVectorEqual(vector, [0, 4, 16, 36, 64, 100])
         
         // non-inplace vector * scalar
         let vector3 = vector * 2
         let vector4 = 2 * vector
-        XCTAssertEqual(vector3.length, 6)
-        XCTAssertEqual(vector4.length, 6)
-        for (i, n) in vector3.enumerated() {
-            XCTAssertEqual(Int32(i) * Int32(i) * 4, vector[i])
-            XCTAssertEqual(Int32(i) * Int32(i) * 8, n)
-            XCTAssertEqual(Int32(i) * Int32(i) * 8, vector4[i])
-        }
+        AssertVectorEqual(vector, [0, 4, 16, 36, 64, 100])
+        AssertVectorEqual(vector3, [0, 8, 32, 72, 128, 200])
+        AssertVectorEqual(vector4, [0, 8, 32, 72, 128, 200])
         
         // non-inplace vector * vector
         let vector2: VectorInteger32 = [0, 1, 2, 3, 4, 5]
         let vector5 = vector2 * vector2
-        XCTAssertEqual(vector5.length, 6)
-        for (i, n) in vector5.enumerated() {
-            XCTAssertEqual(Int32(i), vector2[i])
-            XCTAssertEqual(Int32(i) * Int32(i), n)
-        }
+        AssertVectorEqual(vector2, [0, 1, 2, 3, 4, 5])
+        AssertVectorEqual(vector5, [0, 1, 4, 9, 16, 25])
     }
     
     func testDivision() {
         // in-place vector / scalar
         var vector: VectorInteger32 = [0, 2, 4, 6, 8, 10]
         vector /= 2
-        XCTAssertEqual(vector.length, 6)
-        for (i, n) in vector.enumerated() {
-            XCTAssertEqual(Int32(i), n)
-        }
+        AssertVectorEqual(vector, [0, 1, 2, 3, 4, 5])
         
         // in-place vector / vector
         var vector2: VectorInteger32 = [2, 4, 6, 8, 10]
         vector2 /= vector2
-        XCTAssertEqual(vector.length, 6)
-        for n in vector2 {
-            XCTAssertEqual(1, n)
-        }
+        AssertVector(vector2, ofLength: 5, withValuesEqualTo: 1)
         
         // non-inplace vector / scalar
         let vector3 = vector2 / 2
-        for (i, n) in vector2.enumerated() {
-            XCTAssertEqual(1, n)
-            XCTAssertEqual(0, vector3[i])
-        }
+        AssertVector(vector2, ofLength: 5, withValuesEqualTo: 1)
+        AssertVector(vector3, ofLength: 5, withValuesEqualTo: 0)
         
         // non-inplace vector / vector
         let vector4 = vector2 / (vector3 + 1)
-        for (i, n) in vector4.enumerated() {
-            XCTAssertEqual(1, n)
-            XCTAssertEqual(1, vector2[i])
-            XCTAssertEqual(0, vector3[i])
-        }
+        AssertVector(vector4, ofLength: 5, withValuesEqualTo: 1)
+        AssertVector(vector2, ofLength: 5, withValuesEqualTo: 1)
+        AssertVector(vector3, ofLength: 5, withValuesEqualTo: 0)
     }
     
     func testPerformanceInPlace() {
