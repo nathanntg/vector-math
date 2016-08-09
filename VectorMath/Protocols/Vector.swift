@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Vector: RandomAccessCollection, ArrayLiteralConvertible, CustomDebugStringConvertible
+public protocol Vector: RandomAccessCollection, ExpressibleByArrayLiteral, CustomDebugStringConvertible
 {
     associatedtype Index
     associatedtype Element

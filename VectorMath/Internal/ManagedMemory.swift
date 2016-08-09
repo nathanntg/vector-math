@@ -17,13 +17,13 @@ final class ManagedMemory<T>: Memory {
     
     init(from memory: ManagedMemory<T>) {
         self.length = memory.length
-        self.memory = UnsafeMutablePointer<T>(allocatingCapacity: length)
-        self.memory.initializeFrom(memory.memory, count: length)
+        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
+        self.memory.initialize(from: memory.memory, count: length)
     }
     
     init(unfilledOfLength length: Int) {
         self.length = length
-        self.memory = UnsafeMutablePointer<T>(allocatingCapacity: length)
+        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
     }
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
@@ -44,7 +44,7 @@ final class ManagedMemory<T>: Memory {
     
     deinit {
         memory.deinitialize(count: length)
-        memory.deallocateCapacity(length)
+        memory.deallocate(capacity: length)
     }
     
     func copy() -> ManagedMemory<T> {
