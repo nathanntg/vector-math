@@ -55,15 +55,15 @@ public struct VectorDouble: Vector, VectorSummarizable, VectorArithmetic
         
         // copy elements
         var elements = elements
-        let _ = withUnsafePointer(&elements[0]) {
-            memcpy(memory[0], $0, sizeof(Element.self) * elements.count)
+        let _ = withUnsafePointer(to: &elements[0]) {
+            memcpy(memory[0], $0, MemoryLayout<Element>.size * elements.count)
         }
     }
     
     // PRIVATE
     
     mutating private func ensureUnique() {
-        if !isUniquelyReferencedNonObjC(&memory) {
+        if !isKnownUniquelyReferenced(&memory) {
             memory = memory.copy()
         }
     }
@@ -93,7 +93,7 @@ public struct VectorDouble: Vector, VectorSummarizable, VectorArithmetic
 //    }
     
     mutating private func ensureUniqueWritableAndReturnReadable() -> ManagedMemory<Element> {
-        if isUniquelyReferencedNonObjC(&memory) {
+        if isKnownUniquelyReferenced(&memory) {
             // uniquely referenced memory, use the same pointer
             return memory
         }

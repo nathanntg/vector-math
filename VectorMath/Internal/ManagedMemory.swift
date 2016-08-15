@@ -27,19 +27,14 @@ final class ManagedMemory<T>: Memory {
     }
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
-        // use posix to make aligned memory
-        var p: UnsafeMutablePointer<Void>? = nil
-        let ret = posix_memalign(&p, align, length * sizeof(T.self))
+        // alignment: MemoryLayout<T>.alignment
         
-        // error check
-        if ret != noErr {
-            let err = String(validatingUTF8: strerror(ret)) ?? "unknown error"
-            fatalError("Unable to allocate aligned memory: \(err).")
-        }
+        // allocate alligned memory
+        let ptr = UnsafeMutableRawPointer.allocate(bytes: length * MemoryLayout<T>.size, alignedTo: align)
         
         // store pointer
         self.length = length
-        self.memory = UnsafeMutablePointer<T>(p!)
+        self.memory = ptr.bindMemory(to: T.self, capacity: length)
     }
     
     deinit {

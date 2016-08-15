@@ -159,7 +159,7 @@ extension VectorArithmetic {
 
 // TODO: implement equatable
 
-public func +=<T: VectorArithmetic, U where T.Element == U>(lhs: inout T, rhs: U) {
+public func +=<T: VectorArithmetic, U>(lhs: inout T, rhs: U) where T.Element == U {
     lhs.inPlaceAddScalar(rhs)
 }
 
@@ -167,7 +167,7 @@ public func +=<T: VectorArithmetic>(lhs: inout T, rhs: T) {
     lhs.inPlaceAddVector(rhs)
 }
 
-public func -=<T: VectorArithmetic, U where T.Element == U>(lhs: inout T, rhs: U) {
+public func -=<T: VectorArithmetic, U>(lhs: inout T, rhs: U) where T.Element == U {
     lhs.inPlaceSubtractScalar(rhs)
 }
 
@@ -175,7 +175,7 @@ public func -=<T: VectorArithmetic>(lhs: inout T, rhs: T) {
     lhs.inPlaceSubtractVector(rhs)
 }
 
-public func *=<T: VectorArithmetic, U where T.Element == U>(lhs: inout T, rhs: U) {
+public func *=<T: VectorArithmetic, U>(lhs: inout T, rhs: U) where T.Element == U {
     lhs.inPlaceMultiplyScalar(rhs)
 }
 
@@ -183,7 +183,7 @@ public func *=<T: VectorArithmetic>(lhs: inout T, rhs: T) {
     lhs.inPlaceMultiplyVector(rhs)
 }
 
-public func /=<T: VectorArithmetic, U where T.Element == U>(lhs: inout T, rhs: U) {
+public func /=<T: VectorArithmetic, U>(lhs: inout T, rhs: U) where T.Element == U {
     lhs.inPlaceDivideScalar(rhs)
 }
 
@@ -191,11 +191,11 @@ public func /=<T: VectorArithmetic>(lhs: inout T, rhs: T) {
     lhs.inPlaceDivideVector(rhs)
 }
 
-public func +<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T {
+public func +<T: VectorArithmetic, U>(lhs: T, rhs: U) -> T where T.Element == U {
     return lhs.addScalar(rhs)
 }
 
-public func +<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
+public func +<T: VectorArithmetic, U>(lhs: U, rhs: T) -> T where T.Element == U {
     return rhs.addScalar(lhs)
 }
 
@@ -203,11 +203,11 @@ public func +<T: VectorArithmetic>(lhs: T, rhs: T) -> T {
     return lhs.addVector(rhs)
 }
 
-public func -<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T {
+public func -<T: VectorArithmetic, U>(lhs: T, rhs: U) -> T where T.Element == U {
     return lhs.subtractScalar(rhs)
 }
 
-public func -<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
+public func -<T: VectorArithmetic, U>(lhs: U, rhs: T) -> T where T.Element == U {
     return rhs.subtractFromScalar(lhs)
 }
 
@@ -215,11 +215,11 @@ public func -<T: VectorArithmetic>(lhs: T, rhs: T) -> T {
     return lhs.subtractVector(rhs)
 }
 
-public func *<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T {
+public func *<T: VectorArithmetic, U>(lhs: T, rhs: U) -> T where T.Element == U {
     return lhs.multiplyScalar(rhs)
 }
 
-public func *<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
+public func *<T: VectorArithmetic, U>(lhs: U, rhs: T) -> T where T.Element == U {
     return rhs.multiplyScalar(lhs)
 }
 
@@ -227,11 +227,11 @@ public func *<T: VectorArithmetic>(lhs: T, rhs: T) -> T {
     return lhs.multiplyVector(rhs)
 }
 
-public func /<T: VectorArithmetic, U where T.Element == U>(lhs: T, rhs: U) -> T {
+public func /<T: VectorArithmetic, U>(lhs: T, rhs: U) -> T where T.Element == U {
     return lhs.divideScalar(rhs)
 }
 
-public func /<T: VectorArithmetic, U where T.Element == U>(lhs: U, rhs: T) -> T {
+public func /<T: VectorArithmetic, U>(lhs: U, rhs: T) -> T where T.Element == U {
     return rhs.divideIntoScalar(lhs)
 }
 

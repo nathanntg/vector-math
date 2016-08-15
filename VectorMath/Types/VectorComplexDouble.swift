@@ -66,13 +66,13 @@ public struct VectorComplexDouble: Vector
     // PRIVATE
     
     mutating private func ensureUnique() {
-        if !isUniquelyReferencedNonObjC(&memory) {
+        if !isKnownUniquelyReferenced(&memory) {
             memory = memory.copy()
         }
     }
     
     mutating private func ensureUniqueWritableAndReturnReadable() -> ManagedMemorySplitComplexDouble {
-        if isUniquelyReferencedNonObjC(&memory) {
+        if isKnownUniquelyReferenced(&memory) {
             // uniquely referenced memory, use the same pointer
             return memory
         }
