@@ -24,6 +24,9 @@
 		D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796251D430CB7009439EB /* ComplexFloat.swift */; };
 		D88796281D430F45009439EB /* VectorComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796271D430F45009439EB /* VectorComplexDouble.swift */; };
 		D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796291D430F5B009439EB /* ComplexDouble.swift */; };
+		D8B60A361D6E2FDD001FD6A3 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = D8B60A341D6E2FDD001FD6A3 /* TPCircularBuffer.c */; };
+		D8B60A371D6E2FDD001FD6A3 /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B60A351D6E2FDD001FD6A3 /* TPCircularBuffer.h */; };
+		D8B60A391D6E316E001FD6A3 /* CircularBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */; };
 		D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CB58511D1C43CD0018E323 /* VectorMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
 		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
@@ -59,6 +62,10 @@
 		D88796251D430CB7009439EB /* ComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexFloat.swift; path = Types/ComplexFloat.swift; sourceTree = "<group>"; };
 		D88796271D430F45009439EB /* VectorComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexDouble.swift; path = Types/VectorComplexDouble.swift; sourceTree = "<group>"; };
 		D88796291D430F5B009439EB /* ComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexDouble.swift; path = Types/ComplexDouble.swift; sourceTree = "<group>"; };
+		D8B60A341D6E2FDD001FD6A3 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TPCircularBuffer.c; path = Internal/TPCircularBuffer/TPCircularBuffer.c; sourceTree = "<group>"; };
+		D8B60A351D6E2FDD001FD6A3 /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCircularBuffer.h; path = Internal/TPCircularBuffer/TPCircularBuffer.h; sourceTree = "<group>"; };
+		D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircularBuffer.swift; path = Internal/CircularBuffer.swift; sourceTree = "<group>"; };
+		D8B60A3A1D6E347A001FD6A3 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = Internal/TPCircularBuffer/module.modulemap; sourceTree = "<group>"; };
 		D8CB584E1D1C43CD0018E323 /* VectorMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8CB58511D1C43CD0018E323 /* VectorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
 		D8CB58531D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -132,6 +139,16 @@
 			name = Internal;
 			sourceTree = "<group>";
 		};
+		D8B60A331D6E2FAE001FD6A3 /* TPCircularBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				D8B60A3A1D6E347A001FD6A3 /* module.modulemap */,
+				D8B60A341D6E2FDD001FD6A3 /* TPCircularBuffer.c */,
+				D8B60A351D6E2FDD001FD6A3 /* TPCircularBuffer.h */,
+			);
+			name = TPCircularBuffer;
+			sourceTree = "<group>";
+		};
 		D8CB58441D1C43CC0018E323 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +194,8 @@
 		D8CB58681D1C444C0018E323 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				D8B60A331D6E2FAE001FD6A3 /* TPCircularBuffer */,
+				D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */,
 				D8CB58691D1C44730018E323 /* ManagedMemory.swift */,
 				D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */,
 				D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */,
@@ -200,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */,
+				D8B60A371D6E2FDD001FD6A3 /* TPCircularBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +330,7 @@
 				D88796201D430BEF009439EB /* VectorSummarizable.swift in Sources */,
 				D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */,
 				D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */,
+				D8B60A361D6E2FDD001FD6A3 /* TPCircularBuffer.c in Sources */,
 				D81B04671D41C8A40053594C /* VectorComplexFloat.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
 				D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */,
@@ -320,6 +341,7 @@
 				D88796221D430C5B009439EB /* ManagedMemorySplitComplex.swift in Sources */,
 				D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */,
 				D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */,
+				D8B60A391D6E316E001FD6A3 /* CircularBuffer.swift in Sources */,
 				D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +477,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MaxMo.VectorMath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/VectorMath/Internal/TPCircularBuffer";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -476,6 +499,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.MaxMo.VectorMath;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "${SRCROOT}/VectorMath/Internal/TPCircularBuffer";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

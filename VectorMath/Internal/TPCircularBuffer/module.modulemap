@@ -1,0 +1,4 @@
+module TPCircularBuffer [system][extern_c] {
+    header "TPCircularBuffer.h"
+    export *
+}
