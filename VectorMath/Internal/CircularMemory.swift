@@ -9,15 +9,35 @@
 import Foundation
 import TPCircularBuffer
 
-enum CircularBufferError: Error {
+enum CircularMemoryError: Error {
     case InsufficientCapacity
 }
 
-final class CircularBuffer<T>
+final class CircularMemory<T>
 {
     internal var buffer: TPCircularBuffer
     
     let maxLength: Int
+    
+    var capacity: Int {
+        get {
+            // get buffer write point and available bytes
+            var availableBytes: Int32 = 0
+            TPCircularBufferHead(&buffer, &availableBytes)
+            
+            return Int(availableBytes)
+        }
+    }
+    
+    var length: Int {
+        get {
+            // get buffer read point and available bytes
+            var availableBytes: Int32 = 0
+            TPCircularBufferTail(&buffer, &availableBytes)
+            
+            return Int(availableBytes)
+        }
+    }
     
     init(maxLength: Int) {
         // store max length
@@ -92,7 +112,7 @@ final class CircularBuffer<T>
             
             // produce bytes
             if !TPCircularBufferProduceBytes(&buffer, baseAddress, Int32(bytes)) {
-                throw CircularBufferError.InsufficientCapacity
+                throw CircularMemoryError.InsufficientCapacity
             }
         }
     }
@@ -103,7 +123,7 @@ final class CircularBuffer<T>
         
         // produce bytes
         if !TPCircularBufferProduceBytes(&buffer, data.memory, Int32(bytes)) {
-            throw CircularBufferError.InsufficientCapacity
+            throw CircularMemoryError.InsufficientCapacity
         }
     }
     
