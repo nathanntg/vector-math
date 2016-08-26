@@ -9,7 +9,7 @@
 import Foundation
 import Accelerate
 
-public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, Equatable
+public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, VectorMemory, Equatable
 {
     public typealias Index = Int
     public typealias Element = Int32
@@ -61,6 +61,14 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, Equ
         }
     }
     
+    public init(copyFromPointer ptr: UnsafePointer<Element>, ofLength length: Index) {
+        // initialize memory
+        memory = ManagedMemory<Element>(unfilledOfLength: length)
+        
+        // copy
+        memcpy(memory[0], ptr, MemoryLayout<Element>.size * length)
+    }
+    
     // PRIVATE
     
     mutating private func ensureUnique() {
@@ -109,6 +117,21 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, Equ
     private func ensureSameLength(_ vector: VectorInteger32) {
         // must have matching lengths
         precondition(memory.length == vector.memory.length, "Vector lengths do not match (\(memory.length) and \(vector.memory.length))")
+    }
+    
+    // MEMORY
+    
+    public var unsafePointer: UnsafeBufferPointer<Element> {
+        get {
+            return UnsafeBufferPointer(start: memory.memory, count: memory.length)
+        }
+    }
+    
+    public var pointer: UnsafeBufferPointer<Element> {
+        mutating get {
+            ensureUnique()
+            return UnsafeBufferPointer(start: memory.memory, count: memory.length)
+        }
     }
     
     // ACCESS

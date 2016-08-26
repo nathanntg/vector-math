@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D81B04671D41C8A40053594C /* VectorComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81B04661D41C8A40053594C /* VectorComplexFloat.swift */; };
-		D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */ = {isa = PBXBuildFile; fileRef = D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */; };
 		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
-		D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696281D1D787700FDD6C4 /* VectorFloat.swift */; };
 		D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856962A1D1D84D400FDD6C4 /* Memory.swift */; };
 		D86008191D43D07700B0BC53 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86008181D43D07700B0BC53 /* Assertions.swift */; };
 		D860081D1D43D16600B0BC53 /* ManagedMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D860081C1D43D16600B0BC53 /* ManagedMemoryTests.swift */; };
@@ -22,16 +19,22 @@
 		D88796221D430C5B009439EB /* ManagedMemorySplitComplex.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */; };
 		D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */; };
 		D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796251D430CB7009439EB /* ComplexFloat.swift */; };
-		D88796281D430F45009439EB /* VectorComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796271D430F45009439EB /* VectorComplexDouble.swift */; };
 		D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D88796291D430F5B009439EB /* ComplexDouble.swift */; };
+		D8AAE2971D7076480017AC38 /* VectorComplexDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2921D7076480017AC38 /* VectorComplexDouble.swift */; };
+		D8AAE2981D7076480017AC38 /* VectorComplexFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2931D7076480017AC38 /* VectorComplexFloat.swift */; };
+		D8AAE2991D7076480017AC38 /* VectorDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2941D7076480017AC38 /* VectorDouble.swift */; };
+		D8AAE29A1D7076480017AC38 /* VectorFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2951D7076480017AC38 /* VectorFloat.swift */; };
+		D8AAE29B1D7076480017AC38 /* VectorInteger32.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2961D7076480017AC38 /* VectorInteger32.swift */; };
+		D8AAE29D1D7076910017AC38 /* CircularBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE29C1D7076910017AC38 /* CircularBuffer.swift */; };
+		D8AAE29F1D70803E0017AC38 /* VectorMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE29E1D70803E0017AC38 /* VectorMemory.swift */; };
+		D8AAE2A31D7087050017AC38 /* CircularBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AAE2A21D7087050017AC38 /* CircularBufferTests.swift */; };
 		D8B60A361D6E2FDD001FD6A3 /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = D8B60A341D6E2FDD001FD6A3 /* TPCircularBuffer.c */; };
 		D8B60A371D6E2FDD001FD6A3 /* TPCircularBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D8B60A351D6E2FDD001FD6A3 /* TPCircularBuffer.h */; };
-		D8B60A391D6E316E001FD6A3 /* CircularBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */; };
+		D8B60A391D6E316E001FD6A3 /* CircularMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8B60A381D6E316D001FD6A3 /* CircularMemory.swift */; };
 		D8CB58521D1C43CD0018E323 /* VectorMath.h in Headers */ = {isa = PBXBuildFile; fileRef = D8CB58511D1C43CD0018E323 /* VectorMath.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
 		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
 		D8CB586D1D1C45A10018E323 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB586C1D1C45A10018E323 /* Accelerate.framework */; };
-		D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,10 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D81B04661D41C8A40053594C /* VectorComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexFloat.swift; path = Types/VectorComplexFloat.swift; sourceTree = "<group>"; };
-		D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorInteger32.swift; path = Types/VectorInteger32.swift; sourceTree = "<group>"; };
 		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
-		D85696281D1D787700FDD6C4 /* VectorFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorFloat.swift; path = Types/VectorFloat.swift; sourceTree = "<group>"; };
 		D856962A1D1D84D400FDD6C4 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memory.swift; path = Protocols/Memory.swift; sourceTree = "<group>"; };
 		D86008181D43D07700B0BC53 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		D860081C1D43D16600B0BC53 /* ManagedMemoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemoryTests.swift; path = Internal/ManagedMemoryTests.swift; sourceTree = "<group>"; };
@@ -60,11 +60,18 @@
 		D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemorySplitComplex.swift; path = Internal/ManagedMemorySplitComplex.swift; sourceTree = "<group>"; };
 		D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemorySplitComplexDouble.swift; path = Internal/ManagedMemorySplitComplexDouble.swift; sourceTree = "<group>"; };
 		D88796251D430CB7009439EB /* ComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexFloat.swift; path = Types/ComplexFloat.swift; sourceTree = "<group>"; };
-		D88796271D430F45009439EB /* VectorComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexDouble.swift; path = Types/VectorComplexDouble.swift; sourceTree = "<group>"; };
 		D88796291D430F5B009439EB /* ComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ComplexDouble.swift; path = Types/ComplexDouble.swift; sourceTree = "<group>"; };
+		D8AAE2921D7076480017AC38 /* VectorComplexDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexDouble.swift; path = Types/Vectors/VectorComplexDouble.swift; sourceTree = "<group>"; };
+		D8AAE2931D7076480017AC38 /* VectorComplexFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorComplexFloat.swift; path = Types/Vectors/VectorComplexFloat.swift; sourceTree = "<group>"; };
+		D8AAE2941D7076480017AC38 /* VectorDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorDouble.swift; path = Types/Vectors/VectorDouble.swift; sourceTree = "<group>"; };
+		D8AAE2951D7076480017AC38 /* VectorFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorFloat.swift; path = Types/Vectors/VectorFloat.swift; sourceTree = "<group>"; };
+		D8AAE2961D7076480017AC38 /* VectorInteger32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorInteger32.swift; path = Types/Vectors/VectorInteger32.swift; sourceTree = "<group>"; };
+		D8AAE29C1D7076910017AC38 /* CircularBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircularBuffer.swift; path = Types/Buffers/CircularBuffer.swift; sourceTree = "<group>"; };
+		D8AAE29E1D70803E0017AC38 /* VectorMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorMemory.swift; path = Protocols/VectorMemory.swift; sourceTree = "<group>"; };
+		D8AAE2A21D7087050017AC38 /* CircularBufferTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircularBufferTests.swift; path = Types/Buffers/CircularBufferTests.swift; sourceTree = "<group>"; };
 		D8B60A341D6E2FDD001FD6A3 /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = TPCircularBuffer.c; path = Internal/TPCircularBuffer/TPCircularBuffer.c; sourceTree = "<group>"; };
 		D8B60A351D6E2FDD001FD6A3 /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCircularBuffer.h; path = Internal/TPCircularBuffer/TPCircularBuffer.h; sourceTree = "<group>"; };
-		D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircularBuffer.swift; path = Internal/CircularBuffer.swift; sourceTree = "<group>"; };
+		D8B60A381D6E316D001FD6A3 /* CircularMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircularMemory.swift; path = Internal/CircularMemory.swift; sourceTree = "<group>"; };
 		D8B60A3A1D6E347A001FD6A3 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = Internal/TPCircularBuffer/module.modulemap; sourceTree = "<group>"; };
 		D8CB584E1D1C43CD0018E323 /* VectorMath.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorMath.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8CB58511D1C43CD0018E323 /* VectorMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorMath.h; sourceTree = "<group>"; };
@@ -73,7 +80,6 @@
 		D8CB585F1D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8CB58691D1C44730018E323 /* ManagedMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemory.swift; path = Internal/ManagedMemory.swift; sourceTree = "<group>"; };
 		D8CB586C1D1C45A10018E323 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VectorDouble.swift; path = Types/VectorDouble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +105,10 @@
 		D85696241D1D779100FDD6C4 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				D8AAE2911D7076020017AC38 /* Buffers */,
+				D8AAE2901D7075F60017AC38 /* Vectors */,
 				D88796251D430CB7009439EB /* ComplexFloat.swift */,
 				D88796291D430F5B009439EB /* ComplexDouble.swift */,
-				D85696281D1D787700FDD6C4 /* VectorFloat.swift */,
-				D8FD043D1D2029F000EDBF64 /* VectorDouble.swift */,
-				D82238831D2ABA2A003B3A76 /* VectorInteger32.swift */,
-				D81B04661D41C8A40053594C /* VectorComplexFloat.swift */,
-				D88796271D430F45009439EB /* VectorComplexDouble.swift */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -116,6 +119,7 @@
 				D85696261D1D77C200FDD6C4 /* Vector.swift */,
 				D887961D1D430B73009439EB /* VectorArithmetic.swift */,
 				D887961F1D430BEF009439EB /* VectorSummarizable.swift */,
+				D8AAE29E1D70803E0017AC38 /* VectorMemory.swift */,
 				D856962A1D1D84D400FDD6C4 /* Memory.swift */,
 			);
 			name = Protocols;
@@ -124,9 +128,8 @@
 		D860081A1D43D09400B0BC53 /* Types */ = {
 			isa = PBXGroup;
 			children = (
-				D860081F1D43D16D00B0BC53 /* VectorFloatTests.swift */,
-				D860081E1D43D16D00B0BC53 /* VectorDoubleTests.swift */,
-				D86008201D43D16D00B0BC53 /* VectorInteger32Tests.swift */,
+				D8AAE2A11D7086DC0017AC38 /* Buffers */,
+				D8AAE2A01D7086D70017AC38 /* Vectors */,
 			);
 			name = Types;
 			sourceTree = "<group>";
@@ -137,6 +140,44 @@
 				D860081C1D43D16600B0BC53 /* ManagedMemoryTests.swift */,
 			);
 			name = Internal;
+			sourceTree = "<group>";
+		};
+		D8AAE2901D7075F60017AC38 /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				D8AAE2921D7076480017AC38 /* VectorComplexDouble.swift */,
+				D8AAE2931D7076480017AC38 /* VectorComplexFloat.swift */,
+				D8AAE2941D7076480017AC38 /* VectorDouble.swift */,
+				D8AAE2951D7076480017AC38 /* VectorFloat.swift */,
+				D8AAE2961D7076480017AC38 /* VectorInteger32.swift */,
+			);
+			name = Vectors;
+			sourceTree = "<group>";
+		};
+		D8AAE2911D7076020017AC38 /* Buffers */ = {
+			isa = PBXGroup;
+			children = (
+				D8AAE29C1D7076910017AC38 /* CircularBuffer.swift */,
+			);
+			name = Buffers;
+			sourceTree = "<group>";
+		};
+		D8AAE2A01D7086D70017AC38 /* Vectors */ = {
+			isa = PBXGroup;
+			children = (
+				D860081F1D43D16D00B0BC53 /* VectorFloatTests.swift */,
+				D860081E1D43D16D00B0BC53 /* VectorDoubleTests.swift */,
+				D86008201D43D16D00B0BC53 /* VectorInteger32Tests.swift */,
+			);
+			name = Vectors;
+			sourceTree = "<group>";
+		};
+		D8AAE2A11D7086DC0017AC38 /* Buffers */ = {
+			isa = PBXGroup;
+			children = (
+				D8AAE2A21D7087050017AC38 /* CircularBufferTests.swift */,
+			);
+			name = Buffers;
 			sourceTree = "<group>";
 		};
 		D8B60A331D6E2FAE001FD6A3 /* TPCircularBuffer */ = {
@@ -195,7 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				D8B60A331D6E2FAE001FD6A3 /* TPCircularBuffer */,
-				D8B60A381D6E316D001FD6A3 /* CircularBuffer.swift */,
+				D8B60A381D6E316D001FD6A3 /* CircularMemory.swift */,
 				D8CB58691D1C44730018E323 /* ManagedMemory.swift */,
 				D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */,
 				D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */,
@@ -329,20 +370,22 @@
 			files = (
 				D88796201D430BEF009439EB /* VectorSummarizable.swift in Sources */,
 				D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */,
-				D82238841D2ABA2A003B3A76 /* VectorInteger32.swift in Sources */,
 				D8B60A361D6E2FDD001FD6A3 /* TPCircularBuffer.c in Sources */,
-				D81B04671D41C8A40053594C /* VectorComplexFloat.swift in Sources */,
+				D8AAE29A1D7076480017AC38 /* VectorFloat.swift in Sources */,
+				D8AAE29D1D7076910017AC38 /* CircularBuffer.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
-				D8FD043E1D2029F000EDBF64 /* VectorDouble.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
 				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
-				D88796281D430F45009439EB /* VectorComplexDouble.swift in Sources */,
+				D8AAE2971D7076480017AC38 /* VectorComplexDouble.swift in Sources */,
 				D887961E1D430B73009439EB /* VectorArithmetic.swift in Sources */,
 				D88796221D430C5B009439EB /* ManagedMemorySplitComplex.swift in Sources */,
-				D85696291D1D787700FDD6C4 /* VectorFloat.swift in Sources */,
+				D8AAE29F1D70803E0017AC38 /* VectorMemory.swift in Sources */,
+				D8AAE29B1D7076480017AC38 /* VectorInteger32.swift in Sources */,
+				D8AAE2981D7076480017AC38 /* VectorComplexFloat.swift in Sources */,
 				D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */,
-				D8B60A391D6E316E001FD6A3 /* CircularBuffer.swift in Sources */,
+				D8B60A391D6E316E001FD6A3 /* CircularMemory.swift in Sources */,
 				D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */,
+				D8AAE2991D7076480017AC38 /* VectorDouble.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +397,7 @@
 				D860081D1D43D16600B0BC53 /* ManagedMemoryTests.swift in Sources */,
 				D86008221D43D16D00B0BC53 /* VectorFloatTests.swift in Sources */,
 				D86008211D43D16D00B0BC53 /* VectorDoubleTests.swift in Sources */,
+				D8AAE2A31D7087050017AC38 /* CircularBufferTests.swift in Sources */,
 				D86008191D43D07700B0BC53 /* Assertions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

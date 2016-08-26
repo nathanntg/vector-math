@@ -25,7 +25,10 @@ final class CircularMemory<T>
             var availableBytes: Int32 = 0
             TPCircularBufferHead(&buffer, &availableBytes)
             
-            return Int(availableBytes)
+            // convert to count
+            let availableCount = bytesToCount(bytes: Int(availableBytes))
+            
+            return availableCount
         }
     }
     
@@ -35,7 +38,10 @@ final class CircularMemory<T>
             var availableBytes: Int32 = 0
             TPCircularBufferTail(&buffer, &availableBytes)
             
-            return Int(availableBytes)
+            // convert to count
+            let availableCount = bytesToCount(bytes: Int(availableBytes))
+            
+            return availableCount
         }
     }
     
@@ -108,7 +114,7 @@ final class CircularMemory<T>
         // has based address? otherwise means there is no data
         if let baseAddress = data.baseAddress {
             // calculate number of bytes
-            let bytes = data.count * MemoryLayout<T>.size
+            let bytes = countToBytes(count: data.count)
             
             // produce bytes
             if !TPCircularBufferProduceBytes(&buffer, baseAddress, Int32(bytes)) {
