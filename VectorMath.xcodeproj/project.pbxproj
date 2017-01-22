@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D800BD941D205EFA00703B7C /* MemoryRecylcing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */; };
 		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
 		D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856962A1D1D84D400FDD6C4 /* Memory.swift */; };
 		D86008191D43D07700B0BC53 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86008181D43D07700B0BC53 /* Assertions.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRecylcing.swift; path = Internal/MemoryRecylcing.swift; sourceTree = "<group>"; };
 		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
 		D856962A1D1D84D400FDD6C4 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memory.swift; path = Protocols/Memory.swift; sourceTree = "<group>"; };
 		D86008181D43D07700B0BC53 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				D8CB58691D1C44730018E323 /* ManagedMemory.swift */,
 				D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */,
 				D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */,
+				D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -310,7 +313,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "MaxMo Technologies LLC";
 				TargetAttributes = {
 					D8CB584D1D1C43CD0018E323 = {
@@ -374,6 +377,7 @@
 				D8AAE29A1D7076480017AC38 /* VectorFloat.swift in Sources */,
 				D8AAE29D1D7076910017AC38 /* CircularBuffer.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
+				D800BD941D205EFA00703B7C /* MemoryRecylcing.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
 				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
 				D8AAE2971D7076480017AC38 /* VectorComplexDouble.swift in Sources */,
@@ -428,8 +432,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -478,8 +484,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";

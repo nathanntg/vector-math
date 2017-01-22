@@ -9,6 +9,28 @@
 import Foundation
 import Accelerate
 
+let recycle: MemoryRecycling? = nil
+
+private func allocateMemory<T>(withLength length: Int) -> UnsafeMutablePointer<T> {
+    if let r = recycle {
+        if let ptr = r.findMemory(length: length, size: MemoryLayout<T>.size) {
+            return UnsafeMutablePointer<T>(ptr)
+        }
+    }
+    
+    return UnsafeMutablePointer<T>.allocate(capacity: length)
+}
+
+private func freeMemory<T>(atPointer ptr: UnsafeMutablePointer<T>, withLength length: Int) {
+    ptr.deinitialize(count: length)
+    if let r = recycle {
+        r.recycleMemory(pointer: UnsafeMutableRawPointer(ptr), length: length, size: MemoryLayout<T>.size)
+    }
+    else {
+        ptr.deallocate(capacity: length)
+    }
+}
+
 final class ManagedMemory<T>: Memory {
     typealias ElementType = T
     
@@ -17,13 +39,13 @@ final class ManagedMemory<T>: Memory {
     
     init(from memory: ManagedMemory<T>) {
         self.length = memory.length
-        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
+        self.memory = allocateMemory(withLength: length)
         self.memory.initialize(from: memory.memory, count: length)
     }
     
     init(unfilledOfLength length: Int) {
         self.length = length
-        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
+        self.memory = allocateMemory(withLength: length)
     }
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
@@ -39,7 +61,7 @@ final class ManagedMemory<T>: Memory {
     
     deinit {
         memory.deinitialize(count: length)
-        memory.deallocate(capacity: length)
+        freeMemory(atPointer: memory, withLength: length)
     }
     
     func copy() -> ManagedMemory<T> {
