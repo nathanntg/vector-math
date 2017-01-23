@@ -9,59 +9,60 @@
 import Foundation
 import Accelerate
 
-let recycle: MemoryRecycling? = nil
-
-private func allocateMemory<T>(withLength length: Int) -> UnsafeMutablePointer<T> {
-    if let r = recycle {
-        if let ptr = r.findMemory(length: length, size: MemoryLayout<T>.size) {
-            return UnsafeMutablePointer<T>(ptr)
-        }
-    }
-    
-    return UnsafeMutablePointer<T>.allocate(capacity: length)
-}
-
-private func freeMemory<T>(atPointer ptr: UnsafeMutablePointer<T>, withLength length: Int) {
-    ptr.deinitialize(count: length)
-    if let r = recycle {
-        r.recycleMemory(pointer: UnsafeMutableRawPointer(ptr), length: length, size: MemoryLayout<T>.size)
-    }
-    else {
-        ptr.deallocate(capacity: length)
-    }
-}
+let allocator: Allocator = AllocatorMalloc()
 
 final class ManagedMemory<T>: Memory {
     typealias ElementType = T
     
+    let bytes: Int
     let length: Int
+    let alignment: Int
     internal let memory: UnsafeMutablePointer<T>
     
     init(from memory: ManagedMemory<T>) {
         self.length = memory.length
-        self.memory = allocateMemory(withLength: length)
-        self.memory.initialize(from: memory.memory, count: length)
+        self.bytes = memory.length * MemoryLayout<T>.stride
+        self.alignment = MemoryLayout<T>.alignment
+        
+        // allocate memory
+        let pointer = allocator.allocateMemory(bytes: self.bytes, alignment: self.alignment)
+        
+        // initialize memory
+        self.memory = pointer.bindMemory(to: T.self, capacity: self.length)
+        self.memory.initialize(from: memory.memory, count: self.length)
     }
     
     init(unfilledOfLength length: Int) {
         self.length = length
-        self.memory = allocateMemory(withLength: length)
+        self.bytes = length * MemoryLayout<T>.stride
+        self.alignment = MemoryLayout<T>.alignment
+        
+        // allocate memory
+        let pointer = allocator.allocateMemory(bytes: self.bytes, alignment: self.alignment)
+        
+        // initialize memory
+        self.memory = pointer.bindMemory(to: T.self, capacity: length)
     }
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
-        // alignment: MemoryLayout<T>.alignment
+        self.length = length
+        self.bytes = length * MemoryLayout<T>.size
+        self.alignment = align
         
         // allocate alligned memory
-        let ptr = UnsafeMutableRawPointer.allocate(bytes: length * MemoryLayout<T>.size, alignedTo: align)
+        let ptr = UnsafeMutableRawPointer.allocate(bytes: self.bytes, alignedTo: self.alignment)
         
-        // store pointer
-        self.length = length
+        // initialize memory
         self.memory = ptr.bindMemory(to: T.self, capacity: length)
     }
     
     deinit {
+        // deinitialize memory
         memory.deinitialize(count: length)
-        freeMemory(atPointer: memory, withLength: length)
+        
+        // free memory
+        let pointer = UnsafeMutableRawPointer(memory)
+        allocator.deallocateMemory(pointer: pointer, bytes: bytes, alignment: alignment)
     }
     
     func copy() -> ManagedMemory<T> {

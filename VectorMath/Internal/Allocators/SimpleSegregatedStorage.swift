@@ -1,9 +1,9 @@
 //
-//  MemoryRecylcing.swift
+//  SimpleSegregatedStorage.swift
 //  VectorMath
 //
-//  Created by Nathan Perkins on 6/26/16.
-//  Copyright © 2016 MaxMo Technologies LLC. All rights reserved.
+//  Created by Nathan Perkins on 1/22/17.
+//  Copyright © 2017 MaxMo Technologies LLC. All rights reserved.
 //
 
 import Foundation
@@ -26,7 +26,7 @@ private func ==(lhs: MemorySignature, rhs: MemorySignature) -> Bool {
     return lhs.length == rhs.length && lhs.size == rhs.size
 }
 
-internal class MemoryRecycling
+internal final class AllocatorSimpleSegregatedStorage
 {
     private var memoryBlocks = [MemorySignature: Array<UnsafeMutableRawPointer>]()
     private var totalMemory = 0
@@ -52,7 +52,7 @@ internal class MemoryRecycling
         queue.sync {
             // at / above threshold?
             if totalMemory >= maxMemory {
-                ptr.deallocateCapacity(sig.totalSize)
+                ptr.deallocate(bytes: sig.totalSize, alignedTo: MemoryLayout<Float>.alignment)
                 return
             }
             
@@ -76,7 +76,7 @@ internal class MemoryRecycling
                     
                     let totalSize = key.totalSize
                     list.forEach {
-                        $0.deallocateCapacity(totalSize)
+                        $0.deallocate(bytes: totalSize, alignedTo: MemoryLayout<Float>.alignment)
                     }
                 }
                 memoryBlocks.removeAll()

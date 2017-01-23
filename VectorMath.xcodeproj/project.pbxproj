@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D800BD941D205EFA00703B7C /* MemoryRecylcing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */; };
 		D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85696261D1D77C200FDD6C4 /* Vector.swift */; };
 		D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856962A1D1D84D400FDD6C4 /* Memory.swift */; };
 		D86008191D43D07700B0BC53 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86008181D43D07700B0BC53 /* Assertions.swift */; };
@@ -36,6 +35,9 @@
 		D8CB58591D1C43CD0018E323 /* VectorMath.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB584E1D1C43CD0018E323 /* VectorMath.framework */; };
 		D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CB58691D1C44730018E323 /* ManagedMemory.swift */; };
 		D8CB586D1D1C45A10018E323 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8CB586C1D1C45A10018E323 /* Accelerate.framework */; };
+		D8FFBC0D1E357C78007B85CE /* Malloc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFBC0C1E357C78007B85CE /* Malloc.swift */; };
+		D8FFBC0F1E357CC0007B85CE /* Allocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFBC0E1E357CC0007B85CE /* Allocator.swift */; };
+		D8FFBC111E357E34007B85CE /* SimpleSegregatedStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FFBC101E357E34007B85CE /* SimpleSegregatedStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryRecylcing.swift; path = Internal/MemoryRecylcing.swift; sourceTree = "<group>"; };
 		D85696261D1D77C200FDD6C4 /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Vector.swift; path = Protocols/Vector.swift; sourceTree = "<group>"; };
 		D856962A1D1D84D400FDD6C4 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Memory.swift; path = Protocols/Memory.swift; sourceTree = "<group>"; };
 		D86008181D43D07700B0BC53 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
@@ -82,6 +83,9 @@
 		D8CB585F1D1C43CD0018E323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8CB58691D1C44730018E323 /* ManagedMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedMemory.swift; path = Internal/ManagedMemory.swift; sourceTree = "<group>"; };
 		D8CB586C1D1C45A10018E323 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		D8FFBC0C1E357C78007B85CE /* Malloc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Malloc.swift; path = Internal/Allocators/Malloc.swift; sourceTree = "<group>"; };
+		D8FFBC0E1E357CC0007B85CE /* Allocator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Allocator.swift; path = Internal/Allocators/Allocator.swift; sourceTree = "<group>"; };
+		D8FFBC101E357E34007B85CE /* SimpleSegregatedStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimpleSegregatedStorage.swift; path = Internal/Allocators/SimpleSegregatedStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,12 +241,12 @@
 		D8CB58681D1C444C0018E323 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				D8FFBC0B1E357C63007B85CE /* Allocators */,
 				D8B60A331D6E2FAE001FD6A3 /* TPCircularBuffer */,
 				D8B60A381D6E316D001FD6A3 /* CircularMemory.swift */,
 				D8CB58691D1C44730018E323 /* ManagedMemory.swift */,
 				D88796211D430C5B009439EB /* ManagedMemorySplitComplex.swift */,
 				D88796231D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift */,
-				D800BD931D205EFA00703B7C /* MemoryRecylcing.swift */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -253,6 +257,16 @@
 				D8CB586C1D1C45A10018E323 /* Accelerate.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8FFBC0B1E357C63007B85CE /* Allocators */ = {
+			isa = PBXGroup;
+			children = (
+				D8FFBC0E1E357CC0007B85CE /* Allocator.swift */,
+				D8FFBC0C1E357C78007B85CE /* Malloc.swift */,
+				D8FFBC101E357E34007B85CE /* SimpleSegregatedStorage.swift */,
+			);
+			name = Allocators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -373,11 +387,12 @@
 			files = (
 				D88796201D430BEF009439EB /* VectorSummarizable.swift in Sources */,
 				D887962A1D430F5B009439EB /* ComplexDouble.swift in Sources */,
+				D8FFBC111E357E34007B85CE /* SimpleSegregatedStorage.swift in Sources */,
 				D8B60A361D6E2FDD001FD6A3 /* TPCircularBuffer.c in Sources */,
 				D8AAE29A1D7076480017AC38 /* VectorFloat.swift in Sources */,
 				D8AAE29D1D7076910017AC38 /* CircularBuffer.swift in Sources */,
+				D8FFBC0D1E357C78007B85CE /* Malloc.swift in Sources */,
 				D856962B1D1D84D400FDD6C4 /* Memory.swift in Sources */,
-				D800BD941D205EFA00703B7C /* MemoryRecylcing.swift in Sources */,
 				D85696271D1D77C200FDD6C4 /* Vector.swift in Sources */,
 				D8CB586A1D1C44730018E323 /* ManagedMemory.swift in Sources */,
 				D8AAE2971D7076480017AC38 /* VectorComplexDouble.swift in Sources */,
@@ -388,6 +403,7 @@
 				D8AAE2981D7076480017AC38 /* VectorComplexFloat.swift in Sources */,
 				D88796241D430C8E009439EB /* ManagedMemorySplitComplexDouble.swift in Sources */,
 				D8B60A391D6E316E001FD6A3 /* CircularMemory.swift in Sources */,
+				D8FFBC0F1E357CC0007B85CE /* Allocator.swift in Sources */,
 				D88796261D430CB7009439EB /* ComplexFloat.swift in Sources */,
 				D8AAE2991D7076480017AC38 /* VectorDouble.swift in Sources */,
 			);
