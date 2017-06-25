@@ -56,7 +56,7 @@ public struct VectorDouble: Vector, VectorSummarizable, VectorArithmetic, Vector
         // copy elements
         var elements = elements
         let _ = withUnsafePointer(to: &elements[0]) {
-            memcpy(memory[0], $0, MemoryLayout<Element>.size * elements.count)
+            memcpy(memory[0], $0, MemoryLayout<Element>.stride * elements.count)
         }
     }
     
@@ -65,7 +65,7 @@ public struct VectorDouble: Vector, VectorSummarizable, VectorArithmetic, Vector
         memory = ManagedMemory<Element>(unfilledOfLength: length)
         
         // copy
-        memcpy(memory[0], ptr, MemoryLayout<Element>.size * length)
+        memcpy(memory[0], ptr, MemoryLayout<Element>.stride * length)
     }
     
     // PRIVATE

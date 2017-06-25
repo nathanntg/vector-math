@@ -50,7 +50,7 @@ final class CircularMemory<T>
         self.maxLength = maxLength
         
         // length in bytes
-        let maxBytes = MemoryLayout<T>.size * maxLength
+        let maxBytes = MemoryLayout<T>.stride * maxLength
         
         // create buffer
         buffer = TPCircularBuffer()
@@ -65,11 +65,11 @@ final class CircularMemory<T>
     }
     
     private func countToBytes(count: Int) -> Int {
-        return count * MemoryLayout<T>.size
+        return count * MemoryLayout<T>.stride
     }
     
     private func bytesToCount(bytes: Int) -> Int {
-        return bytes / MemoryLayout<T>.size
+        return bytes / MemoryLayout<T>.stride
     }
     
     /// Buffer for reading data from the tail of the circular buffer. Returns nil if there is no data.
@@ -125,7 +125,7 @@ final class CircularMemory<T>
     
     func produce(data: ManagedMemory<T>) throws {
         // calculate number of bytes
-        let bytes = data.length * MemoryLayout<T>.size
+        let bytes = countToBytes(count: data.length)
         
         // produce bytes
         if !TPCircularBufferProduceBytes(&buffer, data.memory, Int32(bytes)) {

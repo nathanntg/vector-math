@@ -46,7 +46,7 @@ final class ManagedMemory<T>: Memory {
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
         self.length = length
-        self.bytes = length * MemoryLayout<T>.size
+        self.bytes = length * MemoryLayout<T>.stride
         self.alignment = align
         
         // allocate alligned memory
