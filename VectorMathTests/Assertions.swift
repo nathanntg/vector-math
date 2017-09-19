@@ -28,7 +28,7 @@ func AssertVectorEqualWithAccuracy<T: Vector>(_ a: T, _ b: T, accuracy: Float = 
     }
     
     for i in 0..<a.length {
-        XCTAssertEqualWithAccuracy(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)
+        XCTAssertEqual(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)
     }
 }
 
@@ -39,7 +39,7 @@ func AssertVectorEqualWithAccuracy<T: Vector>(_ a: T, _ b: T, accuracy: Double =
     }
     
     for i in 0..<a.length {
-        XCTAssertEqualWithAccuracy(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)
+        XCTAssertEqual(a[i], b[i], accuracy: accuracy, "expected a[\(i)] == b[\(i)]", file: file, line: line)
     }
 }
 
@@ -55,7 +55,7 @@ func AssertVector<T: Vector>(_ a: T, ofLength length: Int, withValuesApproximate
     XCTAssertEqual(a.length, length, "expected a.length == \(length)", file: file, line: line)
     
     for i in 0..<a.length {
-        XCTAssertEqualWithAccuracy(a[i], val, accuracy: accuracy, "expected a[\(i)] == \(val)", file: file, line: line)
+        XCTAssertEqual(a[i], val, accuracy: accuracy, "expected a[\(i)] == \(val)", file: file, line: line)
     }
 }
 
@@ -63,7 +63,7 @@ func AssertVector<T: Vector>(_ a: T, ofLength length: Int, withValuesApproximate
     XCTAssertEqual(a.length, length, "expected a.length == \(length)", file: file, line: line)
     
     for i in 0..<a.length {
-        XCTAssertEqualWithAccuracy(a[i], val, accuracy: accuracy, "expected a[\(i)] == \(val)", file: file, line: line)
+        XCTAssertEqual(a[i], val, accuracy: accuracy, "expected a[\(i)] == \(val)", file: file, line: line)
     }
 }
 
