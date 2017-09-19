@@ -65,7 +65,7 @@ class VectorInteger32Tests: XCTestCase {
         
         vector += 5
         for (i, j) in vector.enumerated() {
-            XCTAssertEqual(Int32(i) + 5, j)
+            XCTAssertEqual(Int32(i) + Int32(5), j)
         }
     }
     

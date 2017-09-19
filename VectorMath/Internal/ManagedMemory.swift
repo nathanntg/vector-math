@@ -9,37 +9,60 @@
 import Foundation
 import Accelerate
 
+let allocator: Allocator = AllocatorMalloc()
+
 final class ManagedMemory<T>: Memory {
     typealias ElementType = T
     
+    let bytes: Int
     let length: Int
+    let alignment: Int
     internal let memory: UnsafeMutablePointer<T>
     
     init(from memory: ManagedMemory<T>) {
         self.length = memory.length
-        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
-        self.memory.initialize(from: memory.memory, count: length)
+        self.bytes = memory.length * MemoryLayout<T>.stride
+        self.alignment = MemoryLayout<T>.alignment
+        
+        // allocate memory
+        let pointer = allocator.allocateMemory(bytes: self.bytes, alignment: self.alignment)
+        
+        // initialize memory
+        self.memory = pointer.bindMemory(to: T.self, capacity: self.length)
+        self.memory.initialize(from: memory.memory, count: self.length)
     }
     
     init(unfilledOfLength length: Int) {
         self.length = length
-        self.memory = UnsafeMutablePointer<T>.allocate(capacity: length)
+        self.bytes = length * MemoryLayout<T>.stride
+        self.alignment = MemoryLayout<T>.alignment
+        
+        // allocate memory
+        let pointer = allocator.allocateMemory(bytes: self.bytes, alignment: self.alignment)
+        
+        // initialize memory
+        self.memory = pointer.bindMemory(to: T.self, capacity: length)
     }
     
     init(unfilledOfLength length: Int, withAlignment align: Int) {
-        // alignment: MemoryLayout<T>.alignment
+        self.length = length
+        self.bytes = length * MemoryLayout<T>.stride
+        self.alignment = align
         
         // allocate alligned memory
-        let ptr = UnsafeMutableRawPointer.allocate(bytes: length * MemoryLayout<T>.size, alignedTo: align)
+        let ptr = UnsafeMutableRawPointer.allocate(bytes: self.bytes, alignedTo: self.alignment)
         
-        // store pointer
-        self.length = length
+        // initialize memory
         self.memory = ptr.bindMemory(to: T.self, capacity: length)
     }
     
     deinit {
+        // deinitialize memory
         memory.deinitialize(count: length)
-        memory.deallocate(capacity: length)
+        
+        // free memory
+        let pointer = UnsafeMutableRawPointer(memory)
+        allocator.deallocateMemory(pointer: pointer, bytes: bytes, alignment: alignment)
     }
     
     func copy() -> ManagedMemory<T> {
