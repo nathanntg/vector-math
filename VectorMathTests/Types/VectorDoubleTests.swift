@@ -37,7 +37,7 @@ class VectorDoubleTests: XCTestCase {
         // manually test just in case something is wrong with initialization, since that would affect test argument
         let vector2: VectorDouble = [2.0, 3.0, 5.0, 7.0, 11.0, 13.0]
         XCTAssertEqual(vector2.count, 6)
-        XCTAssertEqualWithAccuracy(vector2[4], 11.0, accuracy: 1e-7)
+        XCTAssertEqual(vector2[4], 11.0, accuracy: 1e-7)
     }
     
     func testSummarize() {
@@ -45,10 +45,10 @@ class VectorDoubleTests: XCTestCase {
         arr += (0..<10).map(Double.init)
         
         let vector = VectorDouble(fromArray: arr)
-        XCTAssertEqualWithAccuracy(vector.sum(), 45.0, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.mean(), 4.5, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.min(), 0.0, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.max(), 9.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.sum(), 45.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.mean(), 4.5, accuracy: 1e-7)
+        XCTAssertEqual(vector.min(), 0.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.max(), 9.0, accuracy: 1e-7)
     }
     
     func testCollection() {
@@ -61,12 +61,12 @@ class VectorDoubleTests: XCTestCase {
         
         // test enumeration and values
         for (i, j) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Double(i), j, accuracy: 1e-7)
+            XCTAssertEqual(Double(i), j, accuracy: 1e-7)
         }
         
         vector += 5.0
         for (i, j) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Double(i) + 5.0, j, accuracy: 1e-7)
+            XCTAssertEqual(Double(i) + 5.0, j, accuracy: 1e-7)
         }
     }
     

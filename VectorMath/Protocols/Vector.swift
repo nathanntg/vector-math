@@ -10,9 +10,6 @@ import Foundation
 
 public protocol Vector: RandomAccessCollection, ExpressibleByArrayLiteral, CustomDebugStringConvertible
 {
-    associatedtype Index
-    associatedtype Element
-    
     var count: Index { get }
     var length: Index { get }
     
@@ -26,7 +23,7 @@ public protocol Vector: RandomAccessCollection, ExpressibleByArrayLiteral, Custo
     subscript(index: Index) -> Element { get set }
 }
 
-extension Vector where Index: Integer {
+extension Vector where Index == Int {
     public var startIndex: Index {
         return 0
     }

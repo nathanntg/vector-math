@@ -36,7 +36,7 @@ class VectorFloatTests: XCTestCase {
         // manually test just in case something is wrong with initialization, since that would affect test argument
         let vector2: VectorFloat = [2.0, 3.0, 5.0, 7.0, 11.0, 13.0]
         XCTAssertEqual(vector2.count, 6)
-        XCTAssertEqualWithAccuracy(vector2[4], 11.0, accuracy: 1e-7)
+        XCTAssertEqual(vector2[4], 11.0, accuracy: 1e-7)
     }
     
     func testSummarize() {
@@ -44,10 +44,10 @@ class VectorFloatTests: XCTestCase {
         arr += (0..<10).map(Float.init)
         
         let vector = VectorFloat(fromArray: arr)
-        XCTAssertEqualWithAccuracy(vector.sum(), 45.0, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.mean(), 4.5, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.min(), 0.0, accuracy: 1e-7)
-        XCTAssertEqualWithAccuracy(vector.max(), 9.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.sum(), 45.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.mean(), 4.5, accuracy: 1e-7)
+        XCTAssertEqual(vector.min(), 0.0, accuracy: 1e-7)
+        XCTAssertEqual(vector.max(), 9.0, accuracy: 1e-7)
     }
     
     func testCollection() {
@@ -60,13 +60,13 @@ class VectorFloatTests: XCTestCase {
         
         // test enumeration and values
         for (i, j) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i), j, accuracy: 1e-7)
+            XCTAssertEqual(Float(i), j, accuracy: 1e-7)
         }
         
         // edit and re-enumerate
         vector += 5.0
         for (i, j) in vector.enumerated() {
-            XCTAssertEqualWithAccuracy(Float(i) + 5.0, j, accuracy: 1e-7)
+            XCTAssertEqual(Float(i) + 5.0, j, accuracy: 1e-7)
         }
     }
     
