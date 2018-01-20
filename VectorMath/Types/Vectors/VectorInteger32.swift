@@ -55,9 +55,8 @@ public struct VectorInteger32: Vector, VectorSummarizable, VectorArithmetic, Vec
         memory = ManagedMemory<Element>(unfilledOfLength: elements.count)
         
         // copy elements
-        var elements = elements
-        let _ = withUnsafePointer(to: &elements[0]) {
-            memcpy(memory[0], $0, MemoryLayout<Element>.stride * elements.count)
+        let _ = elements.withUnsafeBufferPointer() {
+            memcpy(memory[0], $0.baseAddress, MemoryLayout<Element>.stride * $0.count)
         }
     }
     
