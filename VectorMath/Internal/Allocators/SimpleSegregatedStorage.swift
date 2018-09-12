@@ -57,7 +57,7 @@ fileprivate class AllocatorPage
         let alignment = max(MemoryLayout<Chunk>.alignment, kDefaultPageAlignment)
         let stride = chunkBytes + MemoryLayout<Chunk>.stride
         let newBytes = additionalChunks * stride
-        let newMemory = UnsafeMutableRawPointer.allocate(bytes: newBytes, alignedTo: alignment)
+        let newMemory = UnsafeMutableRawPointer.allocate(byteCount: newBytes, alignment: alignment)
         
         var first: UnsafeMutablePointer<Chunk>?
         var last: UnsafeMutablePointer<Chunk>?

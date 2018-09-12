@@ -50,7 +50,7 @@ final class ManagedMemory<T>: Memory {
         self.alignment = align
         
         // allocate alligned memory
-        let ptr = UnsafeMutableRawPointer.allocate(bytes: self.bytes, alignedTo: self.alignment)
+        let ptr = UnsafeMutableRawPointer.allocate(byteCount: self.bytes, alignment: self.alignment)
         
         // initialize memory
         self.memory = ptr.bindMemory(to: T.self, capacity: length)

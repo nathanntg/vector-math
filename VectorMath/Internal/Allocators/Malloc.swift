@@ -11,10 +11,10 @@ import Foundation
 internal final class AllocatorMalloc: Allocator
 {
     func allocateMemory(bytes: Int, alignment: Int) -> UnsafeMutableRawPointer {
-        return UnsafeMutableRawPointer.allocate(bytes: bytes, alignedTo: alignment)
+        return UnsafeMutableRawPointer.allocate(byteCount: bytes, alignment: alignment)
     }
     
     func deallocateMemory(pointer: UnsafeMutableRawPointer, bytes: Int, alignment: Int) {
-        pointer.deallocate(bytes: bytes, alignedTo: alignment)
+        pointer.deallocate()
     }
 }
